@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_42a9542e2a1644009318e0a7db8d0e26 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+             <h3 align="center" style="font-size:20px"><b>강서구의 공원들</b></h3>
+             
+    
+            <div class="folium-map" id="map_42a9542e2a1644009318e0a7db8d0e26" ></div>
+        
+</body>
+<script>    
+    
+            var map_42a9542e2a1644009318e0a7db8d0e26 = L.map(
+                "map_42a9542e2a1644009318e0a7db8d0e26",
+                {
+                    center: [37.56633643333333, 126.83935973333331],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_7fe7ef63c4a946c6835a9c2ddbdba8d8 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_42a9542e2a1644009318e0a7db8d0e26);
+        
+    
+            var marker_b88569ccaa154139b414b4b9244f3a85 = L.marker(
+                [37.5575833, 126.86115],
+                {}
+            ).addTo(map_42a9542e2a1644009318e0a7db8d0e26);
+        
+    
+        var popup_5c1d14b86bf64ffdb0cb023d3f27e9b7 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_a8daf90e560446528d4cc7caed7f5dfb = $(`<div id="html_a8daf90e560446528d4cc7caed7f5dfb" style="width: 100.0%; height: 100.0%;">매화근린공원</div>`)[0];
+            popup_5c1d14b86bf64ffdb0cb023d3f27e9b7.setContent(html_a8daf90e560446528d4cc7caed7f5dfb);
+        
+
+        marker_b88569ccaa154139b414b4b9244f3a85.bindPopup(popup_5c1d14b86bf64ffdb0cb023d3f27e9b7)
+        ;
+
+        
+    
+    
+            marker_b88569ccaa154139b414b4b9244f3a85.bindTooltip(
+                `<div>
+                     1980.4㎡   
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_828d6e670fd34dc08b07e603995812a0 = L.marker(
+                [37.5679874, 126.8526745],
+                {}
+            ).addTo(map_42a9542e2a1644009318e0a7db8d0e26);
+        
+    
+        var popup_47fd230bc35e4c4c93275ac561096ad0 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d5b051a7c2a64934b9f8021e441bc449 = $(`<div id="html_d5b051a7c2a64934b9f8021e441bc449" style="width: 100.0%; height: 100.0%;">허준공원</div>`)[0];
+            popup_47fd230bc35e4c4c93275ac561096ad0.setContent(html_d5b051a7c2a64934b9f8021e441bc449);
+        
+
+        marker_828d6e670fd34dc08b07e603995812a0.bindPopup(popup_47fd230bc35e4c4c93275ac561096ad0)
+        ;
+
+        
+    
+    
+            marker_828d6e670fd34dc08b07e603995812a0.bindTooltip(
+                `<div>
+                     29843.8㎡ 
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_41311fbf4e854d1f8f8c02850bb3460e = L.marker(
+                [37.5735645, 126.838952],
+                {}
+            ).addTo(map_42a9542e2a1644009318e0a7db8d0e26);
+        
+    
+        var popup_8771b714136d450d99ae98b1dfbc53f3 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_6bf2564d65784a968e305dc91f44606d = $(`<div id="html_6bf2564d65784a968e305dc91f44606d" style="width: 100.0%; height: 100.0%;">궁산근린공원</div>`)[0];
+            popup_8771b714136d450d99ae98b1dfbc53f3.setContent(html_6bf2564d65784a968e305dc91f44606d);
+        
+
+        marker_41311fbf4e854d1f8f8c02850bb3460e.bindPopup(popup_8771b714136d450d99ae98b1dfbc53f3)
+        ;
+
+        
+    
+    
+            marker_41311fbf4e854d1f8f8c02850bb3460e.bindTooltip(
+                `<div>
+                     135002.7㎡ 
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_6c21c9dcd96348798bbfdce14053a661 = L.marker(
+                [37.5801585, 126.8157075],
+                {}
+            ).addTo(map_42a9542e2a1644009318e0a7db8d0e26);
+        
+    
+        var popup_ccfaa7030f4f44ac8026c8f7f0811185 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_1c2b88d1fefb4b41af5ad8b31fb494b9 = $(`<div id="html_1c2b88d1fefb4b41af5ad8b31fb494b9" style="width: 100.0%; height: 100.0%;">꿩고개근린공원</div>`)[0];
+            popup_ccfaa7030f4f44ac8026c8f7f0811185.setContent(html_1c2b88d1fefb4b41af5ad8b31fb494b9);
+        
+
+        marker_6c21c9dcd96348798bbfdce14053a661.bindPopup(popup_ccfaa7030f4f44ac8026c8f7f0811185)
+        ;
+
+        
+    
+    
+            marker_6c21c9dcd96348798bbfdce14053a661.bindTooltip(
+                `<div>
+                     180000㎥
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_ee86bfc1590946edb7e052c1fd72509d = L.marker(
+                [37.5819812, 126.8132285],
+                {}
+            ).addTo(map_42a9542e2a1644009318e0a7db8d0e26);
+        
+    
+        var popup_96f8e1127d6141d1bf611133075a6ece = L.popup({"maxWidth": "100%"});
+
+        
+            var html_bbc6b55cc47b45b495e9e4aace3a400b = $(`<div id="html_bbc6b55cc47b45b495e9e4aace3a400b" style="width: 100.0%; height: 100.0%;">방화근린공원</div>`)[0];
+            popup_96f8e1127d6141d1bf611133075a6ece.setContent(html_bbc6b55cc47b45b495e9e4aace3a400b);
+        
+
+        marker_ee86bfc1590946edb7e052c1fd72509d.bindPopup(popup_96f8e1127d6141d1bf611133075a6ece)
+        ;
+
+        
+    
+    
+            marker_ee86bfc1590946edb7e052c1fd72509d.bindTooltip(
+                `<div>
+                     72132㎡
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_5bb9e2d7caca49a8b10f2297c80312f7 = L.marker(
+                [37.55797020000001, 126.8689817],
+                {}
+            ).addTo(map_42a9542e2a1644009318e0a7db8d0e26);
+        
+    
+        var popup_0a54662a530b42dc85bddb43a25e93f4 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_5da4eb02a86844718ebf49343a0f4a55 = $(`<div id="html_5da4eb02a86844718ebf49343a0f4a55" style="width: 100.0%; height: 100.0%;">염창근린공원</div>`)[0];
+            popup_0a54662a530b42dc85bddb43a25e93f4.setContent(html_5da4eb02a86844718ebf49343a0f4a55);
+        
+
+        marker_5bb9e2d7caca49a8b10f2297c80312f7.bindPopup(popup_0a54662a530b42dc85bddb43a25e93f4)
+        ;
+
+        
+    
+    
+            marker_5bb9e2d7caca49a8b10f2297c80312f7.bindTooltip(
+                `<div>
+                     112070㎡
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_a106940819f94b13a4747ad7477c99f0 = L.marker(
+                [37.5541932, 126.844932],
+                {}
+            ).addTo(map_42a9542e2a1644009318e0a7db8d0e26);
+        
+    
+        var popup_a3d4c7612a7c4ecfb7d1fff7485f6c95 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d74b77b4fe3e4e4b8faf872a459df78e = $(`<div id="html_d74b77b4fe3e4e4b8faf872a459df78e" style="width: 100.0%; height: 100.0%;">우장산근린공원</div>`)[0];
+            popup_a3d4c7612a7c4ecfb7d1fff7485f6c95.setContent(html_d74b77b4fe3e4e4b8faf872a459df78e);
+        
+
+        marker_a106940819f94b13a4747ad7477c99f0.bindPopup(popup_a3d4c7612a7c4ecfb7d1fff7485f6c95)
+        ;
+
+        
+    
+    
+            marker_a106940819f94b13a4747ad7477c99f0.bindTooltip(
+                `<div>
+                     359435.2㎡
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_6a4b14b7427d4242b41ca98f939a1539 = L.marker(
+                [37.5421979, 126.85178359999999],
+                {}
+            ).addTo(map_42a9542e2a1644009318e0a7db8d0e26);
+        
+    
+        var popup_46b956f5c3874ac0bc36a14908c81f0c = L.popup({"maxWidth": "100%"});
+
+        
+            var html_8f46cd9a7f4a48f08f5eaffa4ae11ca5 = $(`<div id="html_8f46cd9a7f4a48f08f5eaffa4ae11ca5" style="width: 100.0%; height: 100.0%;">봉제산공원</div>`)[0];
+            popup_46b956f5c3874ac0bc36a14908c81f0c.setContent(html_8f46cd9a7f4a48f08f5eaffa4ae11ca5);
+        
+
+        marker_6a4b14b7427d4242b41ca98f939a1539.bindPopup(popup_46b956f5c3874ac0bc36a14908c81f0c)
+        ;
+
+        
+    
+    
+            marker_6a4b14b7427d4242b41ca98f939a1539.bindTooltip(
+                `<div>
+                     917190㎡
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_3201367de1c1478daaa7677f2c99c30e = L.marker(
+                [37.581391700000005, 126.8068278],
+                {}
+            ).addTo(map_42a9542e2a1644009318e0a7db8d0e26);
+        
+    
+        var popup_ae41b26b76344e17acf0adf86d61c968 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_69dad8d6724a4f4aae78f51e67371551 = $(`<div id="html_69dad8d6724a4f4aae78f51e67371551" style="width: 100.0%; height: 100.0%;">개화근린공원</div>`)[0];
+            popup_ae41b26b76344e17acf0adf86d61c968.setContent(html_69dad8d6724a4f4aae78f51e67371551);
+        
+
+        marker_3201367de1c1478daaa7677f2c99c30e.bindPopup(popup_ae41b26b76344e17acf0adf86d61c968)
+        ;
+
+        
+    
+    
+            marker_3201367de1c1478daaa7677f2c99c30e.bindTooltip(
+                `<div>
+                     386500㎡
+                 </div>`,
+                {"sticky": true}
+            );
+        
+</script>

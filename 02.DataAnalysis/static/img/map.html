@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_abd0257cf37f4f8ba51f25c6b609cee3 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+                    <h3 align="center" style="font-size:20px"><b>관악구의 공원</b></h3>
+                    
+    
+            <div class="folium-map" id="map_abd0257cf37f4f8ba51f25c6b609cee3" ></div>
+        
+</body>
+<script>    
+    
+            var map_abd0257cf37f4f8ba51f25c6b609cee3 = L.map(
+                "map_abd0257cf37f4f8ba51f25c6b609cee3",
+                {
+                    center: [37.454710399999996, 126.95132050000001],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_ba0fbd3712154cf28d6086e378feabae = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_abd0257cf37f4f8ba51f25c6b609cee3);
+        
+    
+            var marker_22a2890179b9424a80d6b329dbd081b3 = L.marker(
+                [37.445208, 126.96413],
+                {}
+            ).addTo(map_abd0257cf37f4f8ba51f25c6b609cee3);
+        
+    
+        var popup_4ea9f2d821b941e0804fd34f03336f16 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_c571f8027fd34c3b9c805da460ee92c2 = $(`<div id="html_c571f8027fd34c3b9c805da460ee92c2" style="width: 100.0%; height: 100.0%;">관악산도시자연공원</div>`)[0];
+            popup_4ea9f2d821b941e0804fd34f03336f16.setContent(html_c571f8027fd34c3b9c805da460ee92c2);
+        
+
+        marker_22a2890179b9424a80d6b329dbd081b3.bindPopup(popup_4ea9f2d821b941e0804fd34f03336f16)
+        ;
+
+        
+    
+    
+            marker_22a2890179b9424a80d6b329dbd081b3.bindTooltip(
+                `<div>
+                     서울특별시 관악구 관악로 1(관악산공원)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_9453aaa347674569a55e9893e7a1432a = L.marker(
+                [37.4642128, 126.938511],
+                {}
+            ).addTo(map_abd0257cf37f4f8ba51f25c6b609cee3);
+        
+    
+        var popup_144dbb04980c4216b23ca5847061eef2 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_7fcf2a9d1ee946c48e9c3df6829b82f2 = $(`<div id="html_7fcf2a9d1ee946c48e9c3df6829b82f2" style="width: 100.0%; height: 100.0%;">샘말공원(관악산)</div>`)[0];
+            popup_144dbb04980c4216b23ca5847061eef2.setContent(html_7fcf2a9d1ee946c48e9c3df6829b82f2);
+        
+
+        marker_9453aaa347674569a55e9893e7a1432a.bindPopup(popup_144dbb04980c4216b23ca5847061eef2)
+        ;
+
+        
+    
+    
+            marker_9453aaa347674569a55e9893e7a1432a.bindTooltip(
+                `<div>
+                     서울특별시 관악구 대학동 산63-1일대 샘말공원
+                 </div>`,
+                {"sticky": true}
+            );
+        
+</script>

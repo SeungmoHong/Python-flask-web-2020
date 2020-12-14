@@ -1,0 +1,40 @@
+{% extends "09.base.html" %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+    <strong>서울특별시 공원 크기별로 표시</strong>
+{% endblock %}
+{% block content %}
+    <div class = "embed-responsive embed-responsive-16by9">
+        <iframe class = "embed-responsive-item" 
+        src = "{{url_for('static', filename='img/map1.html', q=mtime)}}"></iframe>
+    </div>
+    <br>
+    <strong>구별 공원 위치</strong>
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <form action="/seoul/park" method="POST">
+                <table class="table table-borderless">
+                    <tr>
+                        <td>
+                            <select class="custom-select custom-select-md" name="gu">
+                                {% for key in seoulPark['구별'].unique() %}
+                                    <option value="{{key}}">{{key}}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="text-align: center;">
+                            <button type="submit" class="btn btn-primary">실행</button>&nbsp;&nbsp;&nbsp;
+                            <button type="reset" class="btn btn-secondary">취소</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div class = "embed-responsive embed-responsive-16by9">
+            <iframe class = "embed-responsive-item" 
+            src = "{{url_for('static', filename='img/map.html', q=mtime)}}"></iframe>
+        </div>
+{% endblock %}
