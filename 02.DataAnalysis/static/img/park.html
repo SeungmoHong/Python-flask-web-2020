@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_6638c9a434284c3bb33b87b38963897e {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+            <div class="folium-map" id="map_6638c9a434284c3bb33b87b38963897e" ></div>
+        
+</body>
+<script>    
+    
+            var map_6638c9a434284c3bb33b87b38963897e = L.map(
+                "map_6638c9a434284c3bb33b87b38963897e",
+                {
+                    center: [37.580477, 127.00758700000002],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_7702a8d2856447a385e458c8060e46a6 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_6638c9a434284c3bb33b87b38963897e);
+        
+    
+            var marker_7d6d48bdaecf45b49f7dd705dbad9178 = L.marker(
+                [37.580477, 127.00758700000002],
+                {}
+            ).addTo(map_6638c9a434284c3bb33b87b38963897e);
+        
+    
+        var popup_0927e68c379c468887af110279651ac1 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_21eb0f58dd7342e28901eed55818a336 = $(`<div id="html_21eb0f58dd7342e28901eed55818a336" style="width: 100.0%; height: 100.0%;">낙산근린공원</div>`)[0];
+            popup_0927e68c379c468887af110279651ac1.setContent(html_21eb0f58dd7342e28901eed55818a336);
+        
+
+        marker_7d6d48bdaecf45b49f7dd705dbad9178.bindPopup(popup_0927e68c379c468887af110279651ac1)
+        ;
+
+        
+    
+    
+            marker_7d6d48bdaecf45b49f7dd705dbad9178.bindTooltip(
+                `<div>
+                     서울특별시 종로구 낙산길 41 (우) 03085
+                 </div>`,
+                {"sticky": true}
+            );
+        
+</script>

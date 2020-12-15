@@ -1,0 +1,52 @@
+{% extends "09.base.html" %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+    <strong>공원정보</strong>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <table class="table table-bordered">
+                <tr>
+                    <td>
+                        공원명 : &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                    </td>
+                    <td>
+                        {{ park.name}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        면적 :
+                    </td>
+                    <td>
+                        {{ '{0:,}'.format(park['면적'])}} m <sup>2</sup>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        주소 :
+                    </td>
+                    <td>
+                        {{ park['addr']}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        주요시설 :
+                    </td>
+                    <td>
+                        {{ park['주요시설' | safe()]}}
+                    </td>
+                </tr>
+            </table>
+            <div class = "embed-responsive embed-responsive-16by9">
+                <iframe class = "embed-responsive-item" 
+                src = "{{url_for('static', filename='img/park.html', q=mtime)}}"></iframe>
+            </div>
+            <button class="btn btn-primary mb-5" onclick="location.href='/seoul/park'">돌아가기</button>
+        </div>
+        <div class="col-1"></div>
+    </div>   
+{% endblock %}
