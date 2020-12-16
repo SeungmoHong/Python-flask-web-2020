@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_0a218100bb554596950f3058e101fed0 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+                        <h3 align="center" style="font-size:20px"><b>강남구의 공원</b></h3>
+                        
+    
+            <div class="folium-map" id="map_0a218100bb554596950f3058e101fed0" ></div>
+        
+</body>
+<script>    
+    
+            var map_0a218100bb554596950f3058e101fed0 = L.map(
+                "map_0a218100bb554596950f3058e101fed0",
+                {
+                    center: [37.49860597142857, 127.06810777142857],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_ec7a21fd4ab34c4296da3e97a14a51de = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_0a218100bb554596950f3058e101fed0);
+        
+    
+            var marker_8c47999a1df2456d873a89b85b61c050 = L.marker(
+                [37.4796489, 127.0809639],
+                {}
+            ).addTo(map_0a218100bb554596950f3058e101fed0);
+        
+    
+        var popup_bf67cf962fe646e99da23bb930af93ea = L.popup({"maxWidth": "100%"});
+
+        
+            var html_8fce5d21f24d466aa5ddd1f709c8bb60 = $(`<div id="html_8fce5d21f24d466aa5ddd1f709c8bb60" style="width: 100.0%; height: 100.0%;">대모산도시자연공원</div>`)[0];
+            popup_bf67cf962fe646e99da23bb930af93ea.setContent(html_8fce5d21f24d466aa5ddd1f709c8bb60);
+        
+
+        marker_8c47999a1df2456d873a89b85b61c050.bindPopup(popup_bf67cf962fe646e99da23bb930af93ea)
+        ;
+
+        
+    
+    
+            marker_8c47999a1df2456d873a89b85b61c050.bindTooltip(
+                `<div>
+                     서울특별시 강남구 광평로10길 30-71(대모산공원) 
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_7bfcad315c5345dea013c1bcf58a5f23 = L.marker(
+                [37.4903127, 127.0450338],
+                {}
+            ).addTo(map_0a218100bb554596950f3058e101fed0);
+        
+    
+        var popup_f64f3efa8f6d4cef95849dcf3a513e77 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_9e17c21d02ae4779b92a12c21ede8be2 = $(`<div id="html_9e17c21d02ae4779b92a12c21ede8be2" style="width: 100.0%; height: 100.0%;">도곡근린공원</div>`)[0];
+            popup_f64f3efa8f6d4cef95849dcf3a513e77.setContent(html_9e17c21d02ae4779b92a12c21ede8be2);
+        
+
+        marker_7bfcad315c5345dea013c1bcf58a5f23.bindPopup(popup_f64f3efa8f6d4cef95849dcf3a513e77)
+        ;
+
+        
+    
+    
+            marker_7bfcad315c5345dea013c1bcf58a5f23.bindTooltip(
+                `<div>
+                     서울특별시 강남구 도곡동 산31-1
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_a7bf65b81d844d388e3682387f56bf54 = L.marker(
+                [37.5246752, 127.0350296],
+                {}
+            ).addTo(map_0a218100bb554596950f3058e101fed0);
+        
+    
+        var popup_ac714233ae744defb3a08f5d6126e5e5 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_6286d664ff9a4ef2b180a384584b1e25 = $(`<div id="html_6286d664ff9a4ef2b180a384584b1e25" style="width: 100.0%; height: 100.0%;">도산근린공원</div>`)[0];
+            popup_ac714233ae744defb3a08f5d6126e5e5.setContent(html_6286d664ff9a4ef2b180a384584b1e25);
+        
+
+        marker_a7bf65b81d844d388e3682387f56bf54.bindPopup(popup_ac714233ae744defb3a08f5d6126e5e5)
+        ;
+
+        
+    
+    
+            marker_a7bf65b81d844d388e3682387f56bf54.bindTooltip(
+                `<div>
+                     서울특별시 강남구 도산대로45길 20(도산공원)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_1f4aa00481784e90829457a45ab8deaa = L.marker(
+                [37.5139026, 127.05549609999998],
+                {}
+            ).addTo(map_0a218100bb554596950f3058e101fed0);
+        
+    
+        var popup_320197eb39654973ad66808566f784b6 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_38f56cd50b2647358ff86ea9afb0f160 = $(`<div id="html_38f56cd50b2647358ff86ea9afb0f160" style="width: 100.0%; height: 100.0%;">봉은공원</div>`)[0];
+            popup_320197eb39654973ad66808566f784b6.setContent(html_38f56cd50b2647358ff86ea9afb0f160);
+        
+
+        marker_1f4aa00481784e90829457a45ab8deaa.bindPopup(popup_320197eb39654973ad66808566f784b6)
+        ;
+
+        
+    
+    
+            marker_1f4aa00481784e90829457a45ab8deaa.bindTooltip(
+                `<div>
+                     서울특별시 강남구 삼성동 75
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_cf86f1d271af4284868f756dbb03ebac = L.marker(
+                [37.4880445, 127.092184],
+                {}
+            ).addTo(map_0a218100bb554596950f3058e101fed0);
+        
+    
+        var popup_6237483e8518466bbd62d750c69417db = L.popup({"maxWidth": "100%"});
+
+        
+            var html_77526032f62345b8bc9f47645486f588 = $(`<div id="html_77526032f62345b8bc9f47645486f588" style="width: 100.0%; height: 100.0%;">광평근린공원</div>`)[0];
+            popup_6237483e8518466bbd62d750c69417db.setContent(html_77526032f62345b8bc9f47645486f588);
+        
+
+        marker_cf86f1d271af4284868f756dbb03ebac.bindPopup(popup_6237483e8518466bbd62d750c69417db)
+        ;
+
+        
+    
+    
+            marker_cf86f1d271af4284868f756dbb03ebac.bindTooltip(
+                `<div>
+                     서울특별시 강남구 수서동 산10-1
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_1e78603fc61a49bda5275662e9bc4394 = L.marker(
+                [37.5213259, 127.052453],
+                {}
+            ).addTo(map_0a218100bb554596950f3058e101fed0);
+        
+    
+        var popup_b73f4e2ed3914869b6edb6ac9b4616d0 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_a2a21976a2c643a8b3d8f9f5e4449e49 = $(`<div id="html_a2a21976a2c643a8b3d8f9f5e4449e49" style="width: 100.0%; height: 100.0%;">청담근린공원</div>`)[0];
+            popup_b73f4e2ed3914869b6edb6ac9b4616d0.setContent(html_a2a21976a2c643a8b3d8f9f5e4449e49);
+        
+
+        marker_1e78603fc61a49bda5275662e9bc4394.bindPopup(popup_b73f4e2ed3914869b6edb6ac9b4616d0)
+        ;
+
+        
+    
+    
+            marker_1e78603fc61a49bda5275662e9bc4394.bindTooltip(
+                `<div>
+                     서울특별시 강남구 청담동 66
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_04009e015d804aedafc62be48b7230bd = L.marker(
+                [37.472332, 127.115594],
+                {}
+            ).addTo(map_0a218100bb554596950f3058e101fed0);
+        
+    
+        var popup_bd8ce8ae726e47aa9ed080f2edec9762 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_6cfcdde823e14d9ca394c6604cc200e2 = $(`<div id="html_6cfcdde823e14d9ca394c6604cc200e2" style="width: 100.0%; height: 100.0%;">율현공원</div>`)[0];
+            popup_bd8ce8ae726e47aa9ed080f2edec9762.setContent(html_6cfcdde823e14d9ca394c6604cc200e2);
+        
+
+        marker_04009e015d804aedafc62be48b7230bd.bindPopup(popup_bd8ce8ae726e47aa9ed080f2edec9762)
+        ;
+
+        
+    
+    
+            marker_04009e015d804aedafc62be48b7230bd.bindTooltip(
+                `<div>
+                     서울특별시 강남구 율현동 밤고개로24길(율현동 56)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+</script>

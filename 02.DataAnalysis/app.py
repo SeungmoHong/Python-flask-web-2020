@@ -1,7 +1,8 @@
 from flask import Flask, render_template, session, request
 from fbprophet import Prophet
 from datetime import datetime, timedelta
-import os, json
+import os, json, logging
+from logging.config import dictConfig
 import pandas as pd
 import pandas_datareader as pdr
 import matplotlib as mpl 
@@ -11,10 +12,17 @@ import folium
 mpl.rc('font', family='Malgun Gothic')
 mpl.rc('axes', unicode_minus=False)
 
+
+
 from my_util.weather import get_weather
 app = Flask(__name__)
 app.secret_key = 'qwert12345'
 kospi_dict, kosdaq_dict = {}, {}
+
+with open('./logging.json', 'r') as file:
+    config = json.load(file)
+dictConfig(config)
+app.logger
 
 def get_weather_main():
     weather = None
@@ -37,17 +45,13 @@ def before_first_request():
     for i in kosdaq.index:
         kosdaq_dict[kosdaq['종목코드'][i]] = kosdaq['종목명'][i]
     seoulPark = pd.read_csv('./static/data/서울시 공원.csv')
-    park_gu = pd.read_csv('./static/data/서울시 공원분석.csv', index_col= 0)
     map = folium.Map(location=[37.5502, 126.982], zoom_start=10.5)
     for i in seoulPark.index:
         folium.CircleMarker([seoulPark.lat[i], seoulPark.lng[i]], 
-                            tooltip=seoulPark['공원명'][i], radius= seoulPark['면적'][i]*0.000002,color='#3186cc', fill_color='#3186cc').add_to(map)
+                            tooltip=seoulPark['공원명'][i], radius= seoulPark['면적'][i]*0.000004,color='#3186cc', fill_color='#3186cc').add_to(map)
     map.save('./static/img/map1.html')
 
 
-    title_html = '<h3 align="center" style="font-size:20px"><b>자치구별 공원수</b></h3>'   
-    map.get_root().html.add_child(folium.Element(title_html))
-    map.save('./static/img/park_gu1.html')
 
 @app.before_request
 def before_request():
@@ -56,7 +60,7 @@ def before_request():
 @app.route('/', methods=['GET', 'POST'])
 def index():
     menu = {'ho':1, 'da':0, 'ml':0, 'se':0, 'co':0, 'cg':0, 'cr':0, 'st':0, 'wc':0}
-    return render_template('09.main.html', menu=menu, weather=get_weather_main())
+    return render_template('main.html', menu=menu, weather=get_weather_main())
 
 @app.route('/seoul/park', methods=['GET', 'POST'])
 def park():
@@ -112,8 +116,8 @@ def park_gu_option(option):
                        key_on = 'feature.id')
     elif option == 'area_ratio':
         map.choropleth(geo_data = geo_str,
-                       data = (park_gu['공원의수']/park_gu['공원의면적']),
-                       columns = [park_gu.index, (park_gu['공원의수']/park_gu['공원의면적'])],
+                       data = (park_gu['공원의면적']/park_gu['공원의수']),
+                       columns = [park_gu.index, (park_gu['공원의면적']/park_gu['공원의수'])],
                        fill_color = 'PuRd',
                        key_on = 'feature.id')
     elif option == 'per_person':
@@ -121,7 +125,8 @@ def park_gu_option(option):
                        data = (park_gu['공원의면적']/ park_gu['인구수']),
                        columns = [park_gu.index, (park_gu['공원의면적']/ park_gu['인구수'])],
                        fill_color = 'PuRd',
-                       key_on = 'feature.id')
+                       key_on = 'feature.id')             
+    seoulPark.set_index('공원명',inplace=True)
     for i in seoulPark.index:
         folium.CircleMarker([seoulPark.lat[i], seoulPark.lng[i]], 
                             radius= seoulPark['면적'][i]*0.000002,
@@ -137,7 +142,7 @@ def park_gu_option(option):
 def stock():
     menu = {'ho':0, 'da':1, 'ml':0, 'se':0, 'co':0, 'cg':0, 'cr':0, 'st':1, 'wc':0}
     if request.method == 'GET':
-        return render_template('10.stock.html', menu=menu, weather=get_weather_main(),
+        return render_template('stock.html', menu=menu, weather=get_weather_main(),
                                 kospi=kospi_dict, kosdaq=kosdaq_dict)
     else:
         market = request.form['market']
@@ -171,7 +176,7 @@ def stock():
         fig.savefig(img_file)
         mtime = int(os.stat(img_file).st_mtime)
 
-        return render_template('10.stock_res.html', menu=menu, weather=get_weather_main(), 
+        return render_template('stock_res.html', menu=menu, weather=get_weather_main(), 
                                 mtime=mtime, company=company, code=code)
 
 if __name__ == '__main__':
