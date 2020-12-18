@@ -16,7 +16,8 @@
     "class": "logging.FileHandler",
     "level": "DEBUG",
     "formatter": "basic",
-    "filename": "./log/info.log"
+    "filename": "./log/app.log",
+    "encoding": "UTF-8"
     }
     },
     "root": {

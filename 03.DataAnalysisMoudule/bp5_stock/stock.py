@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request , session
 from flask import current_app
 from fbprophet import Prophet
 from datetime import datetime, timedelta
@@ -8,13 +8,27 @@ import pandas_datareader as pdr
 from my_util.weather import get_weather
 
 stock_bp = Blueprint('stock_bp', __name__)
+
+def get_weather_main():
+    weather = None
+    try:
+        weather = session['weather']
+    except:
+        current_app.logger.info("get new weather info")
+        weather = get_weather()
+        session['weather'] = weather
+        session.permanent = True
+        current_app.permanent_session_lifetime = timedelta(minutes=60)
+    return weather
 kospi_dict, kosdaq_dict = {}, {}
-kospi = pd.read_csv('./static/data/KOSPI.csv', dtype={'종목코드': str})
-for i in kospi.index:
-    kospi_dict[kospi['종목코드'][i]] = kospi['종목명'][i]
-kosdaq = pd.read_csv('./static/data/KOSDAQ.csv', dtype={'종목코드': str})
-for i in kosdaq.index:
-    kosdaq_dict[kosdaq['종목코드'][i]] = kosdaq['종목명'][i]
+@stock_bp.before_app_first_request
+def before_app_first_request():
+    kospi = pd.read_csv('./static/data/KOSPI.csv', dtype={'종목코드': str})
+    for i in kospi.index:
+        kospi_dict[kospi['종목코드'][i]] = kospi['종목명'][i]
+    kosdaq = pd.read_csv('./static/data/KOSDAQ.csv', dtype={'종목코드': str})
+    for i in kosdaq.index:
+        kosdaq_dict[kosdaq['종목코드'][i]] = kosdaq['종목명'][i]
 
 
 @stock_bp.route('/', methods=['GET', 'POST'])

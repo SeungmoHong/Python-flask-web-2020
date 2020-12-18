@@ -8,6 +8,7 @@ roadapikey.txt
 커피업소정보.csv
 station_data/
 과제data/
+log/
 02.Flask/
 fontawesome-free-5.15.1-web/
 # gitignore template for Jupyter Notebooks

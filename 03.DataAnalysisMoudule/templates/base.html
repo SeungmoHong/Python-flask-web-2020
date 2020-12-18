@@ -74,8 +74,9 @@
                         <a class="nav-link dropdown-toggle {% if menu.cg %}active{% endif %}" 
                            data-toggle="dropdown" href="#">카토그램</a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">인구소멸위기</a>
-                            <a class="dropdown-item" href="#">커피지수</a>
+                            <a class="dropdown-item" href="/cartogram/people">인구소멸위기</a>
+                            <a class="dropdown-item" href="/cartogram/coffee">커피지수</a>
+                            <a class="dropdown-item" href="/cartogram/burger">버거지수</a>
                         </div>
                     </li>
                     <div class="dropdown-divider"></div>
@@ -98,8 +99,9 @@
                            data-toggle="dropdown" href="#">워드 클라우드</a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#">여친 선물</a>
-                            <a class="dropdown-item" href="#">경제 뉴스</a>
-                            <a class="dropdown-item" href="#">스포츠 뉴스</a>
+                            <a class="dropdown-item" href="/wordcloud/craw">스포츠뉴스 크롤링</a>
+                            <a class="dropdown-item" href="/wordcloud/text">텍스트로 만들기</a>
+                            <a class="dropdown-item" href="/wordcloud/sports_news">스포츠 뉴스</a>
                         </div>
                     </li>
                     <div class="dropdown-divider"></div>
@@ -112,7 +114,8 @@
                 {% endblock %}
             </div>
         </div>
-    </div> 
+    </div>
+    <br><br><br><br><br>
     <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center fixed-bottom">
         <span class="navbar-text">
             Copyright &copy; 2020 Hoseo Institute of Big Data

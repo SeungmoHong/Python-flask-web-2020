@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block additional_head %}
+    <style>
+        /* Make the image fully responsive */
+        td img {
+            width: 100%;
+        }
+    </style>
+{% endblock %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+    <strong>{{item}}</strong><small> - 카토그램</small>
+{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-9">
+        <table>
+            <tr>
+                <td style="text-align: center;">
+                    <img src="{{url_for('static', filename='img/coffee.png', q=mtime)}}"
+                            width="600" alt="버거지수 이미지">
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-3">
+        <table class="table table-condensed">
+            <tr><td colspan="2" style="text-align: center;"><strong>Top 10</strong></td></tr>
+                {% for i in top_10 %}
+                <tr style="text-align: center;" >
+                    <td><h5> {{i}} </h5></td>
+                </tr>
+                {% endfor %}
+            <td colspan="2" style="text-align: center;">
+                <button class="btn btn-primary"
+                        onclick="location.href='/cartogram/coffee'">돌아가기</button>
+            </td>
+        </table>
+    </div>
+</div>   
+    
+{% endblock %}

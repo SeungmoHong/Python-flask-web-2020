@@ -1,19 +1,35 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, session, g
 from flask import current_app
-import os, json
+from datetime import timedelta
+import os, json,folium
 import pandas as pd
-import pandas_datareader as pdr
 from my_util.weather import get_weather
-import folium
+
 
 seoul_bp = Blueprint('seoul_bp', __name__)
 
+
+def get_weather_main():
+    weather = None
+    try:
+        weather = session['weather']
+    except:
+        current_app.logger.info("get new weather info")
+        weather = get_weather()
+        session['weather'] = weather
+        session.permanent = True
+        current_app.permanent_session_lifetime = timedelta(minutes=60)
+    return weather
+
+
 seoulPark = pd.read_csv('./static/data/서울시 공원.csv')
-map = folium.Map(location=[37.5502, 126.982], zoom_start=10.5)
-for i in seoulPark.index:
-    folium.CircleMarker([seoulPark.lat[i], seoulPark.lng[i]], 
-                        tooltip=seoulPark['공원명'][i], radius= seoulPark['면적'][i]*0.000004,color='#3186cc', fill_color='#3186cc').add_to(map)
-map.save('./static/img/map1.html')
+@seoul_bp.before_app_first_request
+def before_app_first_request():
+    map = folium.Map(location=[37.5502, 126.982], zoom_start=10.5)
+    for i in seoulPark.index:
+        folium.CircleMarker([seoulPark.lat[i], seoulPark.lng[i]], 
+                            tooltip=seoulPark['공원명'][i], radius= seoulPark['면적'][i]*0.000004,color='#3186cc', fill_color='#3186cc').add_to(map)
+    map.save('./static/img/map1.html')
 
 
 @seoul_bp.route('/park', methods=['GET', 'POST'])
