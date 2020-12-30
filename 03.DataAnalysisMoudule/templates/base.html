@@ -14,7 +14,7 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
         <!-- Brand/logo -->
-        <a class="navbar-brand" style="margin-left:50px;margin-right:100px;" href="#">
+        <a class="navbar-brand" style="margin-left:50px;margin-right:100px;" href="/">
             <img src="{{url_for('static', filename='img/hoseo.png')}}" alt="Logo" style="height:45px;">
         </a>
 
@@ -56,7 +56,7 @@
                             <a class="dropdown-item" href="/seoul/park">공원</a>
                             <a class="dropdown-item" href="/seoul/park_gu/area">공원비교</a>
                             <a class="dropdown-item" href="/seoul/crime/crime">범죄</a>
-                            <a class="dropdown-item" href="#">CCTV</a>
+                            <a class="dropdown-item" href="/seoul/cctv">CCTV</a>
                         </div>
                     </li>
                     <div class="dropdown-divider"></div>
@@ -64,9 +64,11 @@
                         <a class="nav-link dropdown-toggle {% if menu.co %}active{% endif %}" 
                            data-toggle="dropdown" href="#">코로나-19</a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">전국</a>
-                            <a class="dropdown-item" href="#">광역시도별</a>
-                            <a class="dropdown-item" href="#">서울 자치구별</a>
+                            <a class="dropdown-item" href="/covid-19/daily">일일확진자</a>
+                            <a class="dropdown-item" href="/covid-19/bigcity">지역별</a>
+                            <a class="dropdown-item" href="/covid-19/age">연령별 현황</a>
+                            <a class="dropdown-item" href="/covid-19/sex">성별 현황</a>
+                            <a class="dropdown-item" href="/covid-19/seoul">서울 자치구별</a>
                         </div>
                     </li>
                     <div class="dropdown-divider"></div>
@@ -84,8 +86,8 @@
                         <a class="nav-link dropdown-toggle {% if menu.cr %}active{% endif %}" 
                            data-toggle="dropdown" href="#">크롤링</a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">샌드위치</a>
-                            <a class="dropdown-item" href="#">주유소</a>
+                            <a class="dropdown-item" href="/crawling/bugs">벅스 TOP100</a>
+                            <a class="dropdown-item" href="/crawling/mango">망고플레이트</a>
                         </div>
                     </li>
                     <div class="dropdown-divider"></div>

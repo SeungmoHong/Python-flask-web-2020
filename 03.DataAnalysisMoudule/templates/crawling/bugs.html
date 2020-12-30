@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block additional_head %}
+    <style>
+        th, td {
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+    <div class="row md-form active-purple-2 mb-3">
+        <div class="col-6">
+            <strong>Bugs 크롤링 TOP 100</strong>
+        </div>
+    </div>
+{% endblock %}
+{% block content %}
+
+    
+<table class="table table-bordered table-sm">
+    <thead>
+        <tr>
+            <th><p>rank</p></th>
+            <th><p>img</p></th>
+            <th><p>title</p></th>
+            <th><p>artist</p></th>
+            <th><p>album</p></th>
+        </tr>
+    </thead>
+    {% for i in range(100) %}
+    <tr>
+        <td>{{b_dict['rank'][i] | safe()}}</td>
+        <td>{{b_dict['img'][i] | safe()}}</td>
+        <td>{{b_dict['title'][i] | safe()}}</td>
+        <td>{{b_dict['singer'][i] | safe()}}</td>
+        <td>{{b_dict['album'][i] | safe()}}</td>
+    </tr>
+    {% endfor %}
+</table>
+        
+    
+{% endblock %}

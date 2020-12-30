@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block additional_head %}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/jquery-ui.min.css')}}">
+    <style>
+        th, td {
+            text-align: center;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+{% endblock %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+<strong>서울 자치구별 코로나 누적 확진자 현황</strong> <small></small>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-2"></div>
+        <div class = "embed-responsive embed-responsive-16by9 col-8">
+            <iframe class = "embed-responsive-item" 
+            src = "{{url_for('static', filename='img/seoul.html', q=mtime)}}"></iframe>
+        </div>
+        <br>
+        <div class="col-2"></div>
+    </div>
+    
+        (기준 : {{date}})
+        <table class="table table-bordered table-sm">
+            <tr>
+                {% for i in range(13)%}
+                <td>
+                    <a href="/covid-19/seoul/{{c_d['지역'][i]}}"><small>{{c_d['지역'][i]}}</small></a>
+                </td>    
+                {% endfor %}
+            </tr>
+            <tr>
+                {% for i in range(13)%}
+                <td>
+                    <small>{{c_d['확진자수'][i]}}</small>
+                </td>    
+                {% endfor %}
+            </tr>
+            <tr>
+                {% for i in range(13,26)%}
+                <td>
+                    <a href="/covid-19/seoul/{{c_d['지역'][i]}}"><small>{{c_d['지역'][i]}}</small></a>
+                </td>    
+                {% endfor %}
+            </tr>
+            <tr>
+                {% for i in range(13,26)%}
+                <td>
+                <small>{{c_d['확진자수'][i]}}</small>
+                </td>    
+                {% endfor %}
+            </tr>
+        </table>
+        <canvas id="seoul" class="chartjs"></canvas>
+    
+
+{% endblock %}
+
+{% block additional_body %}
+<script>
+    var ctx = document.getElementById('seoul').getContext('2d');
+    new Chart(document.getElementById("seoul"),
+    {"type":"line","data":{"labels":
+        {{month | safe()}}
+    ,
+    "datasets":[{"label":"서울 코로나 확진자 월별 변화","data":
+        {{total}}
+    ,"fill":false,"borderColor":"rgb(75, 192, 192)","lineTension":0.1}]},"options":{}});
+</script>
+{% endblock %}

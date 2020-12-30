@@ -104,7 +104,7 @@ def crime_option(option):
     menu = {'ho':0, 'da':1, 'ml':0, 'se':1, 'co':0, 'cg':0, 'cr':0, 'st':0, 'wc':0}
     geo_str = json.load(open('./static/data/skorea_municipalities_geo_simple.json',
                          encoding='utf8'))
-    df = pd.read_csv('./static/data/서울시5대범죄.csv', index_col=0)      
+    df = pd.read_csv('./static/data/서울시5대범죄.csv', index_col=0)   
     option_dict = {'crime': '범죄','rape':'강간', 'rob':'강도', 'murder':'살인', 'thief':'절도', 'gang':'폭력',
     'crime_arrest': '검거','rape_arrest':'강간검거율', 'rob_arrest':'강도검거율', 'murder_arrest':'살인검거율', 'thief_arrest':'절도검거율', 'gang_arrest':'폭력검거율'}
     column_index =option_dict[option]
@@ -130,4 +130,21 @@ def crime_option(option):
     map.save(html_file)
     mtime = int(os.stat(html_file).st_mtime)
     return render_template('seoul/crime.html', menu=menu, weather=get_weather(),
-                            option_dict=option_dict,option=option,mtime=mtime)                   
+                            option_dict=option_dict,option=option,mtime=mtime)
+
+@seoul_bp.route('/cctv')
+def cctv():
+    menu = {'ho':0, 'da':1, 'ml':0, 'se':1, 'co':0, 'cg':0, 'cr':0, 'st':0, 'wc':0}
+    result = pd.read_csv('./static/data/cctv.csv',index_col=0)
+    return render_template('seoul/cctv.html', menu=menu, weather=get_weather(),result = result)
+
+@seoul_bp.route('/cctv_table')
+def table():
+    menu = {'ho':0, 'da':1, 'ml':0, 'se':1, 'co':0, 'cg':0, 'cr':0, 'st':0, 'wc':0}
+    result = pd.read_csv('./static/data/cctv.csv',index_col=0)
+    result = result.round(2)
+    result.reset_index(inplace=True)
+    res = result[['구별','소계','최근증가율','인구수','내국인','외국인','고령자']]
+    cols = list(res.columns)
+    val = res.values
+    return render_template('seoul/cctv_table.html', menu=menu, weather=get_weather(), res = res,cols = cols, val=val)

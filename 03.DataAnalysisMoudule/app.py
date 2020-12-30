@@ -1,11 +1,16 @@
 from flask import Flask, render_template, session, request
 from bp1_seoul.seoul import seoul_bp
+from bp2_covid.covid import covid_bp
 from bp3_catogram.carto import carto_bp
+from bp4_crawling.crawling import crawling_bp
 from bp5_stock.stock import stock_bp
 from bp6_wordcloud.wc import wc_bp
-import os, json, logging
+import os, json, logging ,sqlite3
 from logging.config import dictConfig
 from datetime import timedelta
+from bs4 import BeautifulSoup
+from datetime import datetime
+import requests
 import pandas as pd
 import pandas_datareader as pdr
 import matplotlib as mpl 
@@ -15,13 +20,16 @@ import folium
 mpl.rc('font', family='Malgun Gothic')
 mpl.rc('axes', unicode_minus=False)
 from my_util.weather import get_weather
+from DB.db_update import daily_update
 
 app = Flask(__name__)
 app.secret_key = 'qwert12345'
 app.config['SESSION_COOKIE_PATH'] = '/'
 
 app.register_blueprint(seoul_bp, url_prefix='/seoul')
+app.register_blueprint(covid_bp, url_prefix='/covid-19')
 app.register_blueprint(carto_bp, url_prefix='/cartogram')
+app.register_blueprint(crawling_bp, url_prefix='/crawling')
 app.register_blueprint(stock_bp, url_prefix='/stock')
 app.register_blueprint(wc_bp, url_prefix='/wordcloud')
 
@@ -42,6 +50,29 @@ def get_weather_main():
         session.permanent = True
         app.permanent_session_lifetime = timedelta(minutes=60)
     return weather
+
+@app.before_first_request
+def before_first_request():
+    today = datetime.today().strftime("%Y-%m-%d")
+    conn = sqlite3.connect('./DB/covid-19.db')
+    cur = conn.cursor()
+    cur.execute('select * from "시도발생_현황"')
+    rows = cur.fetchall()
+    conn.close()
+    if rows[-1][1] != today:
+        key_fd = open('./과제data/gov_data_api_key.txt', mode='r')
+        govapi_key = key_fd.read(100)
+        key_fd.close()
+        start_date = '20200101'
+        end_date = datetime.today().strftime("%Y%m%d")
+        corona_url = 'http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson'
+        url = f'{corona_url}?ServiceKey={govapi_key}&pageNo=1&numOfRows=10&startCreateDt={start_date}&endCreateDt={end_date}'
+        result = requests.get(url)
+        soup = BeautifulSoup(result.text, 'xml')
+        if int(soup.find('seq').string) > int(rows[-1][0]):
+            seq_cnt = int(soup.find('seq').string) - int(rows[-1][0])
+            daily_update(seq_cnt)
+        
 
 
 @app.before_request
