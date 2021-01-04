@@ -1,5 +1,15 @@
 import sqlite3
 
+def all_result():
+    conn = sqlite3.connect('./DB/covid-19.db')
+    cur = conn.cursor()
+    cur.execute('select * from "시도발생_현황" ')
+    rows = cur.fetchall()
+    conn.close()
+
+    return rows
+
+
 
 def d_result(date):
     conn = sqlite3.connect('./DB/covid-19.db')
@@ -19,23 +29,23 @@ def t_result():
 
     return rows
 
-def d_day_result(date):
-    conn = sqlite3.connect('./DB/covid-19.db')
-    cur = conn.cursor()
-    cur.execute(f'select * from "일일확진자 현황" where "일자" = "{date}"')
-    rows = cur.fetchall()
-    conn.close()
+# def d_day_result(date):
+#     conn = sqlite3.connect('./DB/covid-19.db')
+#     cur = conn.cursor()
+#     cur.execute(f'select * from "일일확진자 현황" where "일자" = "{date}"')
+#     rows = cur.fetchall()
+#     conn.close()
 
-    return rows
+#     return rows
 
-def day_result():
-    conn = sqlite3.connect('./DB/covid-19.db')
-    cur = conn.cursor()
-    cur.execute('select * from "일일확진자 현황" order by "일자" desc  limit 7 ')
-    rows = cur.fetchall()
-    conn.close()
+# def day_result():
+#     conn = sqlite3.connect('./DB/covid-19.db')
+#     cur = conn.cursor()
+#     cur.execute('select * from "일일확진자 현황" order by "일자" desc  limit 7 ')
+#     rows = cur.fetchall()
+#     conn.close()
 
-    return rows
+#     return rows
 
 def d_age_result(date):
     conn = sqlite3.connect('./DB/covid-19.db')
@@ -80,6 +90,25 @@ def seoul_data():
     rows = cur.fetchall()
     conn.close()
     
+    return rows
+
+
+def t_chart(data,s_date,e_date):
+    conn = sqlite3.connect('./DB/covid-19.db')
+    cur = conn.cursor()
+    cur.execute(f'''select * from "{data}" where( "일자" >= "{s_date}") and ("일자" <= "{e_date}")''')
+    rows = cur.fetchall()
+    conn.close()
+
+    return rows
+
+def s_chart(s_date,e_date):
+    conn = sqlite3.connect('./DB/covid-19.db')
+    cur = conn.cursor()
+    cur.execute(f'''select * from "서울시 확진자 현황" where( "확진일" >= "{s_date}") and ("확진일" <= "{e_date}") ''')
+    rows = cur.fetchall()
+    conn.close()
+
     return rows
 
 

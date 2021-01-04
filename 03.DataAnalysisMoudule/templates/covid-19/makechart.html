@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% block additional_head %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/jquery-ui.min.css')}}">
+{% endblock %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+    <strong>원하는 기간의 지역별 코로나 데이터 차트 만들기</strong>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <form action="/covid-19/bigcity_chart" method="POST">
+                <table class="table table-borderless">
+                    <tr>
+                        <td style="vertical-align: middle"><label for="data"> 데이터</label></td>
+                        <td>
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" id="data" name="data" value="시도발생_현황" checked>지역별
+                            </label>
+                        </td>
+                        <td>
+                            <select class="custom-select custom-select-md" name="sido_data">
+                                {% for data_1 in ['확진자','사망자','전일대비','격리해제','격리중','지역발생','해외유입','10만명당 확진자'] %}
+                                    <option value="{{data_1}}">{{data_1}}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td rowspan="2" style="vertical-align: middle"><label for="">날짜 고르기 </label></td>
+                        <td>
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" id="date" name="date" value="mon" checked>월별
+                            </label>
+                        </td>
+                        <td>
+                            <select class="custom-select custom-select-md" name="s_mon">
+                                {% for i in month %}
+                                <option value="{{i}}">{{i}}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>
+                            <select class="custom-select custom-select-md" name="e_mon">
+                                {% for i in month %}
+                                <option value="{{i}}">{{i}}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" id="date" name="date" value="day">일일
+                            </label>
+                        </td>
+                        <td>
+                            <input class="form-control" type="text" id="datepicker1" placeholder="ex : 2020-05-05"  name="s_date">
+                        </td>
+                        <td>
+                            <input class="form-control" type="text" id="datepicker2" placeholder="ex : 2020-12-10"  name="e_date">
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                <table>
+                    <tr>
+                    {% for i in area[:10] %}
+                        <td>
+                            <input class="form-check-input" type="checkbox" value="{{i}}" id="area_data" name="area_data">
+                            <label class="form-check-label" for="defaultCheck1">
+                                {{i}}
+                            </label>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </td>                    
+                    {% endfor %}
+                    </tr>
+                    <tr>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        {% for i in area[10:] %}
+                        <td>
+                            <input class="form-check-input" type="checkbox" value="{{i}}" id="area_data" name="area_data">
+                            <label class="form-check-label" for="defaultCheck1">
+                                {{i}}
+                            </label>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </td>                    
+                        {% endfor %}
+
+                    <tr>
+                        <td colspan="10" style="text-align: center;">
+                            <button type="submit" class="btn btn-primary">실행</button>&nbsp;&nbsp;&nbsp;
+                            <button type="reset" class="btn btn-secondary">취소</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div class="col-1"></div>
+    </div> 
+{% endblock %}
+{% block additional_body %}
+<script src="{{url_for('static', filename='js/jquery-ui.min.js')}}"></script>
+<script>
+    $.datepicker.setDefaults({
+        dateFormat: 'yy-mm-dd',
+        prevText: '이전 달',
+        nextText: '다음 달',
+        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+        showMonthAfterYear: true,
+        yearSuffix: '년'
+    });
+    $(function() {
+        $("#datepicker1").datepicker();
+    });
+    $(function() {
+        $("#datepicker2").datepicker();
+    });
+
+    // $('#submit').on('click', function(e) {
+    //     e.preventDefault();
+
+    //     date = $('#datepicker1').val(); 
+    //     endpoint = '/covid/bigcity?date=' + date;
+
+    //     window.location.href = endpoint
+
+    //     return false;
+    // });
+</script>
+{% endblock %}

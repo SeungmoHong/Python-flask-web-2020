@@ -51,27 +51,27 @@ def get_weather_main():
         app.permanent_session_lifetime = timedelta(minutes=60)
     return weather
 
-@app.before_first_request
-def before_first_request():
-    today = datetime.today().strftime("%Y-%m-%d")
-    conn = sqlite3.connect('./DB/covid-19.db')
-    cur = conn.cursor()
-    cur.execute('select * from "시도발생_현황"')
-    rows = cur.fetchall()
-    conn.close()
-    if rows[-1][1] != today:
-        key_fd = open('./과제data/gov_data_api_key.txt', mode='r')
-        govapi_key = key_fd.read(100)
-        key_fd.close()
-        start_date = '20200101'
-        end_date = datetime.today().strftime("%Y%m%d")
-        corona_url = 'http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson'
-        url = f'{corona_url}?ServiceKey={govapi_key}&pageNo=1&numOfRows=10&startCreateDt={start_date}&endCreateDt={end_date}'
-        result = requests.get(url)
-        soup = BeautifulSoup(result.text, 'xml')
-        if int(soup.find('seq').string) > int(rows[-1][0]):
-            seq_cnt = int(soup.find('seq').string) - int(rows[-1][0])
-            daily_update(seq_cnt)
+# @app.before_first_request
+# def before_first_request():
+#     today = datetime.today().strftime("%Y-%m-%d")
+#     conn = sqlite3.connect('./DB/covid-19.db')
+#     cur = conn.cursor()
+#     cur.execute('select * from "시도발생_현황"')
+#     rows = cur.fetchall()
+#     conn.close()
+#     if rows[-1][1] != today:
+#         key_fd = open('./과제data/gov_data_api_key.txt', mode='r')
+#         govapi_key = key_fd.read(100)
+#         key_fd.close()
+#         start_date = '20200101'
+#         end_date = datetime.today().strftime("%Y%m%d")
+#         corona_url = 'http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson'
+#         url = f'{corona_url}?ServiceKey={govapi_key}&pageNo=1&numOfRows=10&startCreateDt={start_date}&endCreateDt={end_date}'
+#         result = requests.get(url)
+#         soup = BeautifulSoup(result.text, 'xml')
+#         if int(soup.find('seq').string) > int(rows[-1][0]):
+#             seq_cnt = int(soup.find('seq').string) - int(rows[-1][0])
+#             daily_update(seq_cnt)
         
 
 

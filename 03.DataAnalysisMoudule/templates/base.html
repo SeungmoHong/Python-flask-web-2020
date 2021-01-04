@@ -53,7 +53,7 @@
                         <a class="nav-link dropdown-toggle {% if menu.se %}active{% endif %}" 
                            data-toggle="dropdown" href="#">서울특별시</a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/seoul/park">공원</a>
+                            <a class="dropdown-item" href="/seoul/park">공원현황</a>
                             <a class="dropdown-item" href="/seoul/park_gu/area">공원비교</a>
                             <a class="dropdown-item" href="/seoul/crime/crime">범죄</a>
                             <a class="dropdown-item" href="/seoul/cctv">CCTV</a>
@@ -66,9 +66,11 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="/covid-19/daily">일일확진자</a>
                             <a class="dropdown-item" href="/covid-19/bigcity">지역별</a>
+                            <a class="dropdown-item" href="/covid-19/bigcity_chart">지역별 데이터로 차트 만들기</a>
                             <a class="dropdown-item" href="/covid-19/age">연령별 현황</a>
-                            <a class="dropdown-item" href="/covid-19/sex">성별 현황</a>
+                            <!-- <a class="dropdown-item" href="/covid-19/sex">성별 현황</a> -->
                             <a class="dropdown-item" href="/covid-19/seoul">서울 자치구별</a>
+                            <a class="dropdown-item" href="/covid-19/seoul_chart">서울 데이터로 차트만들기</a>
                         </div>
                     </li>
                     <div class="dropdown-divider"></div>
@@ -88,6 +90,14 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="/crawling/bugs">벅스 TOP100</a>
                             <a class="dropdown-item" href="/crawling/mango">망고플레이트</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item disabled" href="#">닐슨코리아(시청률)</a>
+                            <a class="dropdown-item ml-2" href="/crawling/tv/1_1">- 지상파 일일</a>
+                            <a class="dropdown-item ml-2" href="/crawling/tv/1_2">- 지상파 주간</a>
+                            <a class="dropdown-item ml-2" href="/crawling/tv/2_1">- 종합편성 일일</a>
+                            <a class="dropdown-item ml-2" href="/crawling/tv/2_2">- 종합편성 주간</a>
+                            <a class="dropdown-item ml-2" href="/crawling/tv/3_1">- 케이블 일일</a>
+                            <a class="dropdown-item ml-2" href="/crawling/tv/3_2">- 케이블 주간</a>
                         </div>
                     </li>
                     <div class="dropdown-divider"></div>
@@ -100,8 +110,7 @@
                         <a class="nav-link dropdown-toggle {% if menu.wc %}active{% endif %}" 
                            data-toggle="dropdown" href="#">워드 클라우드</a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">여친 선물</a>
-                            <a class="dropdown-item" href="/wordcloud/craw">스포츠뉴스 크롤링</a>
+                            <!-- <a class="dropdown-item" href="/wordcloud/craw">스포츠뉴스 크롤링</a> -->
                             <a class="dropdown-item" href="/wordcloud/text">텍스트로 만들기</a>
                             <a class="dropdown-item" href="/wordcloud/sports_news">스포츠 뉴스</a>
                         </div>

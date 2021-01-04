@@ -125,3 +125,11 @@ def mango_search(search):
         })
 
     return mango_dict
+
+def tv_crawl(option):
+    url = f'https://www.nielsenkorea.co.kr/tv_terrestrial_day.asp?menu=Tit_1&sub_menu={option}&area=01&begin_date=202012'
+    req = requests.get(url)
+    html = req.content.decode('utf-8','replace') 
+    soup = BeautifulSoup(html, 'html.parser')
+    
+    return soup

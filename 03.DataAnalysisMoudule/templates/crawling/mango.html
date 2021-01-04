@@ -37,11 +37,11 @@
                 <th><p>정보</p></th>
                 <th><p>주소</p></th>
             </tr>
-            {% for i in range(count) %}  
+            {% for i in range(count) %}
             <tr>
                 <td><a href="{{mango['link'][i]}}">{{mango['title'][i]}}</a></td>
                 <td><img src="{{mango['img'][i]}}" alt="{{mango['title'][i]}}"></td>
-                <td>{{mango['point'][i]}}</td>
+                <td>{{mango['point'][i]}}점</td>
                 <td>{{mango['info'][i]}}</td>
                 <td>{{mango['addr'][i]}}</td>
             </tr>

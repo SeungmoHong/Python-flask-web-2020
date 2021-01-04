@@ -37,6 +37,7 @@
         <tr>
             <th><small>일자</small></th>
             <th><small>강원</small></th>
+            <th><small>검역</small></th>
             <th><small>경기</small></th>
             <th><small>경남</small></th>
             <th><small>경북</small></th>
@@ -58,7 +59,7 @@
     </thead>
     {% for row in rows %}
     <tr>
-        {% for k in range(19) %}
+        {% for k in range(20) %}
             <td>{{row[k]}}</td>
         {% endfor %}
     </tr>
@@ -102,7 +103,7 @@
     var ctx = document.getElementById('day').getContext('2d');
     new Chart(document.getElementById("day"),
     {"type":"line","data":{"labels":["{{rows[6][0]}}","{{rows[5][0]}}","{{rows[4][0]}}","{{rows[3][0]}}","{{rows[2][0]}}","{{rows[1][0]}}","{{rows[0][0]}}"],
-    "datasets":[{"label":"대한민국 코로나 확진자 변화","data":[
+    "datasets":[{"label":"일주일간 코로나 확진자 변화","data":[
         {{rows[6][-1]}},{{rows[5][-1]}},{{rows[4][-1]}},{{rows[3][-1]}},{{rows[2][-1]}},{{rows[1][-1]}},{{rows[0][-1]}}
     ],"fill":false,"borderColor":"rgb(75, 192, 192)","lineTension":0.1}]},"options":{}});
 </script>

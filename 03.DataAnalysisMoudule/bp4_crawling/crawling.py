@@ -43,3 +43,15 @@ def mango_plates():
         count = len(mango['title'])
         
         return render_template('crawling/mango.html', menu=menu, weather=get_weather(), mango=mango, count = count,search =search)
+
+@crawling_bp.route('/tv/<option>')
+def tv_option(option):
+    menu = {'ho':0, 'da':1, 'ml':0, 'se':0, 'co':0, 'cg':0, 'cr':1, 'st':0, 'wc':0}
+    soup = tv_crawl(option)
+    family = soup.select_one('table.ranking_tb')
+    fam = str(family).replace('class="ranking_tb"','table class="table table-bordered table-sm"').replace('<td>','<td><small>').replace('</td>','</td></small>')
+    viewer = soup.select('table.ranking_tb')[1]
+    view = str(viewer).replace('class="ranking_tb"','table class="table table-bordered table-sm"').replace('<td>','<td><small>').replace('</td>','</td></small>')
+    title = soup.select_one('span.subbody_tit_kor').text
+    
+    return render_template('crawling/tv.html', menu=menu, weather=get_weather(), fam=fam, view=view , title = title)

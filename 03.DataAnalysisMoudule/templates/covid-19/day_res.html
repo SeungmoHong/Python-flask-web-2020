@@ -37,6 +37,7 @@
         <tr>
             <th><small>일자</small></th>
             <th><small>강원</small></th>
+            <th><small>검역</small></th>
             <th><small>경기</small></th>
             <th><small>경남</small></th>
             <th><small>경북</small></th>
@@ -58,7 +59,7 @@
     </thead>
     {% for row in rows %}
     <tr>
-        {% for k in range(19) %}
+        {% for k in range(20) %}
             <td>{{row[k]}}</td>
         {% endfor %}
     </tr>
@@ -105,12 +106,12 @@
     
     var ctx = document.getElementById('daily').getContext('2d');
     new Chart(document.getElementById("daily"),
-        {"type":"doughnut","data":{"labels":['강원','경기','경남','경북','광주','대구','대전','부산','서울','세종','울산','인천','전남','전북','제주','충남','충북'],
+        {"type":"doughnut","data":{"labels":['강원','검역','경기','경남','경북','광주','대구','대전','부산','서울','세종','울산','인천','전남','전북','제주','충남','충북'],
         "datasets":[{"label":"지역별 일일 코로나 확진자","data":[
             {{rows[0][1]}},{{rows[0][2]}},{{rows[0][3]}},{{rows[0][4]}},{{rows[0][5]}},{{rows[0][6]}},{{rows[0][7]}},{{rows[0][8]}},{{rows[0][9]}},
-            {{rows[0][10]}},{{rows[0][11]}},{{rows[0][12]}},{{rows[0][13]}},{{rows[0][14]}},{{rows[0][15]}},{{rows[0][16]}},{{rows[0][17]}}
+            {{rows[0][10]}},{{rows[0][11]}},{{rows[0][12]}},{{rows[0][13]}},{{rows[0][14]}},{{rows[0][15]}},{{rows[0][16]}},{{rows[0][17]}},{{rows[0][18]}}
         ],
-        "backgroundColor":["red","violet","green","blue","orange","purple","hotpink","aqua","lime","navy","darkred","indigo","magenta","orangered","royalblue","yellow","brown"]}
+        "backgroundColor":["red","violet","green","blue","orange","purple","hotpink","aqua","lime","blue","darkred","indigo","magenta","orangered","royalblue","yellow","brown","navy"]}
         ]}});
 </script>
 

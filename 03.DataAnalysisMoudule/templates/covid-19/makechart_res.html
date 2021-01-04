@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block additional_head %}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/jquery-ui.min.css')}}">
+    <style>
+        th, td {
+            text-align: center;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+{% endblock %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+<strong>지역별 {{sido_data}} 차트</strong> <small></small>
+{% endblock %}
+{% block content %}
+<div class="row">
+        <canvas id="mc_1" class="chartjs" ></canvas>
+    <div class="col-10"></div>
+    <div class="col-2">
+        <button class="btn btn-primary btn float-right"
+                                onclick="location.href='/covid-19/bigcity_chart'">돌아가기</button>
+        </div>
+</div>
+{% endblock %}
+
+{% block additional_body %}
+<script>
+    
+    var ctx = document.getElementById('mc_1').getContext('2d');
+    new Chart(document.getElementById("mc_1"),
+    {"type":"line",
+    "data":{"labels":
+        {{label | safe()}}
+    ,
+    "datasets":[
+       {% for cha in chart_list %}
+       {{cha | safe()}},
+       {% endfor %}
+
+    ],
+    
+    
+    },"options":{}});
+</script>
+<!-- responsive: false -->
+{% endblock %}
