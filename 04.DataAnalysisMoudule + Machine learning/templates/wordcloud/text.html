@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+    <strong>Word Cloud</strong>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <form action="/wordcloud/text" method="POST" enctype="multipart/form-data">
+                <table class="table table-borderless">
+                    <tr>
+                        <td>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" name="lan" id="han" value="han" class="custom-control-input" checked>
+                                <label class="custom-control-label" for="han">한글</label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" name="lan" id="eng" value="eng" class="custom-control-input">
+                                <label class="custom-control-label" for="eng">영어</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="color">색깔 정하기</label></td>
+                        <td>
+                            <select class="custom-select" id="color" name="color">
+                                {% for color in ['Greys', 'Purples', 'Blues', 'Greens', 'Oranges', 'Reds',
+                                'YlOrBr', 'YlOrRd', 'OrRd', 'PuRd', 'RdPu', 'BuPu',
+                                'GnBu', 'PuBu', 'YlGnBu', 'PuBuGn', 'BuGn', 'YlGn'] %}
+                                    <option value="{{color}}">{{color}}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>이미지 파일</td>
+                        <td>
+                            <div class="custom-file mb-3">
+                                <input type="file" class="custom-file-input" id="img" name="img">
+                                <label class="custom-file-label" for="img">업로드할 이미지 선택</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>txt 파일</td>
+                        <td>
+                            <div class="custom-file mb-3">
+                                <input type="file" class="custom-file-input" id="txt" name="txt">
+                                <label class="custom-file-label" for="txt">업로드할 파일 선택</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="stop_words">금지어<br>(Stopwords)</label></td>
+                        <td>
+                            <textarea name="stop_words" id="stop_words" cols="50" rows="5"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align: center;">
+                            <button type="submit" class="btn btn-primary">실행</button>&nbsp;&nbsp;&nbsp;
+                            <button type="reset" class="btn btn-secondary">취소</button>
+                        </td>
+                    </tr>
+                </table>		
+            </form>
+        </div>
+        <div class="col-2"></div>
+    </div>
+{% endblock %}
+{% block additional_body %}
+    <script>
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+    <strong>서울특별시 공원 크기별로 표시</strong>
+{% endblock %}
+{% block content %}
+    <div class = "embed-responsive embed-responsive-16by9">
+        <iframe class = "embed-responsive-item" 
+        src = "{{url_for('static', filename='img/map1.html', q=mtime)}}"></iframe>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <form action="/seoul/park" method="POST">
+                <table class="table table-borderless">
+                    <tr>
+                        <td>
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" id="seoul1" name="seoul" value="gu" checked> 구별 공원
+                            </label>
+                        </td>
+                        <td>
+                            <select class="custom-select custom-select-md" name="gu" id="gu">
+                                {% for key in seoulPark['구별'].unique() %}
+                                    <option value="{{key}}">{{key}}</option>
+                                {% endfor %}
+                            </select>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" id="seoul2" name="seoul" value="park">공원 정보
+                            </label>
+                        </td>
+                        <td>
+                            <select class="custom-select custom-select-md" name="park" id="park">
+                                {% for key in seoulPark['공원명'].unique() %}
+                                        <option value="{{key}}">{{key}}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="text-align: center;">
+                            <button type="submit" class="btn btn-primary mb-5">찾기</button>&nbsp;&nbsp;&nbsp;
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block additional_body %}
+    <script>
+        $('#gu').on('input', function() {
+            $('#seoul1')[0].checked = true
+        });
+        $('#park').on('input', function() {
+            $('#seoul2')[0].checked = true
+        });
+    </script>
+{% endblock %}

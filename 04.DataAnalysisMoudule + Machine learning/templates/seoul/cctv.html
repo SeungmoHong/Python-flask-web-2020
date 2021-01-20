@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+    <div class="row md-form active-purple-2 mb-3">
+        <div class="col-6">
+            <strong>서울시 CCTV 현황</strong>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <table>
+                <tr>
+                    <td>
+                        <img src="{{url_for('static', filename='img/cctv.png', q=mtime)}}"
+                                width="800" alt="cctv">
+                    </td>
+                </tr>
+            </table>
+            <button class="btn btn-primary float-right"
+                                onclick="location.href='/seoul/cctv_table'">테이블로 보기</button>
+        </div>
+        
+        
+        <div class="col-1"></div>
+    </div>
+    
+    
+{% endblock %}

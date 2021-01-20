@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block additional_head %}
+<style>
+    th, td {
+        text-align: center;
+    }
+</style>
+{% endblock %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+    <strong>이진 분류 유방암 데이터 {{index}}번 예측 결과</strong>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-4">
+            <table class="table table-bordered">
+                {% for i in range(4) %}
+                <tr>
+                    <td>
+                        {{cfs[i]}}
+                    </td>
+                    <td>
+                        {{labels[i]}}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="col-8"></div>
+        <div class="col-12"> <strong>{{index}}번 정보</strong> </div>
+        <div class="col-4">
+            <table class="table table-bordered table-sm">
+                {% for key,val in columns1.items() %}
+                    <tr>
+                        <td>
+                            {{key}} :
+                        </td>
+                        <td>
+                            {{val | round(2)}}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="col-4">
+            <table class="table table-bordered table-sm">
+                {% for key,val in columns2.items() %}
+                    <tr>
+                        <td>
+                            {{key}} :
+                        </td>
+                        <td>
+                            {{val | round(2)}}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="col-4">
+            <table class="table table-bordered table-sm">
+                {% for key,val in columns3.items() %}
+                    <tr>
+                        <td>
+                            {{key}} :
+                        </td>
+                        <td>
+                            {{val | round(2)}}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div> 
+{% endblock %}
+{% block additional_body %}
+{% endblock %}

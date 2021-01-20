@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block additional_head %}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/jquery-ui.min.css')}}">
+    <style>
+        th, td {
+            text-align: center;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+{% endblock %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+    <div class="row md-form active-purple-2 mb-3">
+        <div class="col-6">
+            <strong>성별 감염 현황</strong> <small>  {{date}}일자</small>
+        </div>
+        <div class="col-2"></div>
+        <div class="col-4">
+            <form action="/covid-19/sex" method="POST">
+                <table>
+                    <td>
+                        <input class="form-control" type="text" id="datepicker1" placeholder="ex : 2020-05-05"  name="date">
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary">검색</button>
+                    </td>
+                </table>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <table class="table table-bordered table-sm">
+                <thead>
+                    <tr>
+                        <th>구분</th>
+                        <th>확진자</th>
+                        <th>확진률</th>
+                        <th>치명률</th>
+                        <th>사망자</th>
+                        <th>사망률</th>
+                    </tr>
+                </thead>
+                {% for row in rows %}
+                <tr>
+                    <td>{{row[2]}}</td>
+                    <td>{{row[3]}}</td>
+                    <td>{{row[4]}}%</td>
+                    <td>{{row[5]}}%</td>
+                    <td>{{row[6]}}</td>
+                    <td>{{row[7]}}%</td>
+                </tr>
+                {% endfor %}
+            </table>
+            <canvas id="sex"  width="673" height="336" style="display: block; width: 673px; height: 336px;"></canvas>
+        </div>
+        <div class="col-1"></div>
+    </div>
+    <div ></div>
+    
+    
+{% endblock %}
+{% block additional_body %}
+<script src="{{url_for('static', filename='js/jquery-ui.min.js')}}"></script>
+<script>
+    $.datepicker.setDefaults({
+        dateFormat: 'yy-mm-dd',
+        prevText: '이전 달',
+        nextText: '다음 달',
+        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+        showMonthAfterYear: true,
+        yearSuffix: '년'
+    });
+    $(function() {
+        $("#datepicker1").datepicker();
+    });
+
+    // $('#submit').on('click', function(e) {
+    //     e.preventDefault();
+
+    //     date = $('#datepicker1').val(); 
+    //     endpoint = '/covid/bigcity?date=' + date;
+
+    //     window.location.href = endpoint
+
+    //     return false;
+    // });
+</script>
+<script>
+    var ctx = document.getElementById('sex').getContext('2d');
+    
+	
+</script>
+
+{% endblock %}

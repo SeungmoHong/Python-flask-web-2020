@@ -39,7 +39,7 @@ def get_weather_main():
 def craw():
     menu = {'ho':0, 'da':1, 'ml':0, 'se':0, 'co':0, 'cg':0, 'cr':0, 'st':0, 'wc':1}
     if request.method == 'GET':
-        return render_template('wordcloud/craw.html', menu=menu, weather=get_weather_main())
+        return render_template('wordcloud/craw.html', menu=menu, weather=get_weather())
     else:
         driver = webdriver.Chrome('./chromedriver')
         driver.maximize_window()
@@ -70,14 +70,14 @@ def craw():
             file = open('static/data/wc.txt', 'w',encoding='utf-8')
             file.write(present_text) 
             file.close() 
-        return render_template('wordcloud/craw_res.html', menu=menu, weather=get_weather_main(), text = present_text)
+        return render_template('wordcloud/craw_res.html', menu=menu, weather=get_weather(), text = present_text)
 
 
 @wc_bp.route('/text', methods=['GET', 'POST'])
 def text():
     menu = {'ho':0, 'da':1, 'ml':0, 'se':0, 'co':0, 'cg':0, 'cr':0, 'st':0, 'wc':1}
     if request.method == 'GET':
-        return render_template('wordcloud/text.html', menu=menu, weather=get_weather_main())
+        return render_template('wordcloud/text.html', menu=menu, weather=get_weather())
     else:
         lan = request.form['lan']
         color = request.form['color']
@@ -131,14 +131,14 @@ def text():
         img_file = os.path.join(current_app.root_path, 'static/img/text.png')
         mtime = int(os.stat(img_file).st_mtime)
 
-        return render_template('wordcloud/text_res.html', menu=menu, weather=get_weather_main(), mtime = mtime)
+        return render_template('wordcloud/text_res.html', menu=menu, weather=get_weather(), mtime = mtime)
 
 @wc_bp.route('/sports_news', methods=['GET', 'POST'])
 def sports_news():
     menu = {'ho':0, 'da':1, 'ml':0, 'se':0, 'co':0, 'cg':0, 'cr':0, 'st':0, 'wc':1}
 
     if request.method == 'GET':
-        return render_template('wordcloud/sports_news.html', menu=menu, weather=get_weather_main())
+        return render_template('wordcloud/sports_news.html', menu=menu, weather=get_weather())
     else:
         color = request.form['color']
         try:
@@ -170,7 +170,7 @@ def sports_news():
         img_file = os.path.join(current_app.root_path, 'static/img/sprots.png')
         mtime = int(os.stat(img_file).st_mtime)
         
-        return render_template('wordcloud/sports_news_res.html', menu=menu, weather=get_weather_main(), mtime = mtime)
+        return render_template('wordcloud/sports_news_res.html', menu=menu, weather=get_weather(), mtime = mtime)
     
         
 

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+    <strong>구별 공원 현황</strong>
+{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-7">
+        <table class="table table-condensed">
+            <tr>
+                <th>항목</th><th>{{park_result.gu}}</th><th>평균</th>
+            </tr>
+            <tr>
+                <td>공원면적</td>
+                <td>{{'{:,}'.format(park_result.area)}} m<sup>2</sup></td>
+                <td>{{'{:,}'.format(park_result.m_area)}} m<sup>2</sup></td>
+            </tr>
+            <tr>
+                <td>공원수</td>
+                <td>{{park_count}}</td>
+                <td>{{park_result.m_count}}</td>
+            </tr>
+            <tr>
+                <td>공원면적 비율</td>
+                <td>{{park_result.area_ratio}} %</td>
+                <td>{{park_result.m_area_ratio}} %</td>
+            </tr>
+            <tr>
+                <td>인당 공원면적</td>
+                <td>{{park_result.per_person}} m<sup>2</sup></td>
+                <td>{{park_result.m_per_person}} m<sup>2</sup></td>
+            </tr>
+        </table>
+    </div>
+</div>
+    <div class = "embed-responsive embed-responsive-16by9">
+        <iframe class = "embed-responsive-item" 
+        src = "{{url_for('static', filename='img/map.html', q=mtime)}}"></iframe>
+    </div>
+    <br>
+    <div class="row">
+    <div class="col-10"></div>
+    <button class="btn btn-primary mb-5 " onclick="location.href='/seoul/park'">돌아가기</button>
+    <br><br><br>
+    </div>
+    <br><br>
+{% endblock %}

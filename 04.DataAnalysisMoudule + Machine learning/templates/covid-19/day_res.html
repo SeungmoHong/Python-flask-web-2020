@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block additional_head %}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/jquery-ui.min.css')}}">
+    <style>
+        th, td {
+            text-align: center;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+{% endblock %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+    <div class="row md-form active-purple-2 mb-3">
+        <div class="col-6">
+            <strong>일일 코로나 발생 현황 </strong>
+        </div>
+        <div class="col-2"></div>
+        <div class="col-4">
+            <form action="/covid-19/daily" method="POST">
+                <table>
+                    <td>
+                        <input class="form-control" type="text" id="datepicker1" placeholder="ex : 2020-05-05"  name="date">
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary">검색</button>
+                    </td>
+                </table>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block content %}
+
+    
+<table class="table table-bordered table-sm">
+    <thead>
+        <tr>
+            <th><small>일자</small></th>
+            <th><small>강원</small></th>
+            <th><small>검역</small></th>
+            <th><small>경기</small></th>
+            <th><small>경남</small></th>
+            <th><small>경북</small></th>
+            <th><small>광주</small></th>
+            <th><small>대구</small></th>
+            <th><small>대전</small></th>
+            <th><small>부산</small></th>
+            <th><small>서울</small> </th>
+            <th><small>세종</small></th>
+            <th><small>울산</small></th>
+            <th><small>인천</small></th>
+            <th><small>전남</small></th>
+            <th><small>전북</small></th>
+            <th><small>제주</small></th>
+            <th><small>충남</small></th>
+            <th><small>충북</small></th>
+            <th><small>합계</small></th>
+        </tr>
+    </thead>
+    {% for row in rows %}
+    <tr>
+        {% for k in range(20) %}
+            <td>{{row[k]}}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+<canvas id="daily"  width="673" height="336" style="display: block; width: 673px; height: 336px;"></canvas>        
+<br>
+        <button class="btn btn-primary float-right"
+                                onclick="location.href='/covid-19/daily'">돌아가기</button>
+    
+{% endblock %}
+{% block additional_body %}
+<script src="{{url_for('static', filename='js/jquery-ui.min.js')}}"></script>
+<script>
+    $.datepicker.setDefaults({
+        dateFormat: 'yy-mm-dd',
+        prevText: '이전 달',
+        nextText: '다음 달',
+        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+        showMonthAfterYear: true,
+        yearSuffix: '년'
+    });
+    $(function() {
+        $("#datepicker1").datepicker();
+    });
+
+    // $('#submit').on('click', function(e) {
+    //     e.preventDefault();
+
+    //     date = $('#datepicker1').val(); 
+    //     endpoint = '/covid/bigcity?date=' + date;
+
+    //     window.location.href = endpoint
+
+    //     return false;
+    // });
+</script>
+
+<script>
+    
+    var ctx = document.getElementById('daily').getContext('2d');
+    new Chart(document.getElementById("daily"),
+        {"type":"doughnut","data":{"labels":['강원','검역','경기','경남','경북','광주','대구','대전','부산','서울','세종','울산','인천','전남','전북','제주','충남','충북'],
+        "datasets":[{"label":"지역별 일일 코로나 확진자","data":[
+            {{rows[0][1]}},{{rows[0][2]}},{{rows[0][3]}},{{rows[0][4]}},{{rows[0][5]}},{{rows[0][6]}},{{rows[0][7]}},{{rows[0][8]}},{{rows[0][9]}},
+            {{rows[0][10]}},{{rows[0][11]}},{{rows[0][12]}},{{rows[0][13]}},{{rows[0][14]}},{{rows[0][15]}},{{rows[0][16]}},{{rows[0][17]}},{{rows[0][18]}}
+        ],
+        "backgroundColor":["red","violet","green","blue","orange","purple","hotpink","aqua","lime","blue","darkred","indigo","magenta","orangered","royalblue","yellow","brown","navy"]}
+        ]}});
+</script>
+
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block additional_head %}
+    <style>
+        th, td {
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+    <div class="row md-form active-purple-2 mb-3">
+        <div class="col-6">
+            <strong>망고플레이트 크롤링</strong> <small>-{{search}}</small>
+        </div>
+        <div class="col-2"></div>
+        <div class="col-4">
+            <form action="/crawling/mango" method="POST">
+                <table>
+                    <td>
+                        <input class="form-control" type="text" id="search" placeholder="ex : 발산"  name="search">
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary">검색</button>
+                    </td>
+                </table>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block content %}
+    <table class="table table-bordered table-sm">
+        <thead>
+            <tr>
+                <th><p>이름</p></th>
+                <th><p>이미지</p></th>
+                <th><p>평점</p></th>
+                <th><p>정보</p></th>
+                <th><p>주소</p></th>
+            </tr>
+            {% for i in range(count) %}
+            <tr>
+                <td><a href="{{mango['link'][i]}}">{{mango['title'][i]}}</a></td>
+                <td><img src="{{mango['img'][i]}}" alt="{{mango['title'][i]}}"></td>
+                <td>{{mango['point'][i]}}점</td>
+                <td>{{mango['info'][i]}}</td>
+                <td>{{mango['addr'][i]}}</td>
+            </tr>
+            {% endfor %}   
+        </thead>
+
+    </table>
+
+     
+    
+{% endblock %}

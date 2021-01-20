@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block additional_head %}
+    <style>
+        th, td {
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+    <div class="row md-form active-purple-2 mb-3">
+        <div class="col-6">
+            <strong>서울시 CCTV 현황</strong>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <table class="table table-bordered table-sm">
+                <thead>
+                    {% for column in cols %}
+                    <th>
+                    {{column}}
+                    </th>
+                    {% endfor %}
+                </thead>
+                {% for i in range(25) %}
+                <tr>
+                    <td>
+                        {{val[i][0]}}
+                    </td>
+                    <td>
+                        {{val[i][1]}}
+                    </td>
+                    <td>
+                        {{val[i][2]}}
+                    </td>
+                    <td>
+                        {{val[i][3]}}
+                    </td>
+                    <td>
+                        {{val[i][4]}}
+                    </td>
+                    <td>
+                        {{val[i][5]}}
+                    </td>
+                    <td>
+                        {{val[i][6]}}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    
+        
+        <div class="col-1"></div>
+    </div>
+    
+    
+{% endblock %}

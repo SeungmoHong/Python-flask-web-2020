@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, session, g
+from flask import Blueprint, render_template, request, session, g, redirect, flash, url_for
 from flask import current_app
 from datetime import datetime, timedelta
 from DB.db_module import *
@@ -102,10 +102,9 @@ def seoul():
                     values = '확진자',   
                     aggfunc = 'sum')
     pdf1.fillna(0,inplace=True)
-    pdf1.loc['기타'] = pdf1.loc['기타'] + pdf1.loc['타시도'] + pdf1.loc['남양주시']#+ pdf1.loc['경기도하남시']
+    pdf1.loc['기타'] = pdf1.loc['기타'] + pdf1.loc['타시도']
     pdf1.drop('타시도', inplace=True)
-    pdf1.drop('남양주시', inplace=True)
-    #pdf1.drop('경기도하남시', inplace=True)
+    
     pdf1.loc['합계'] = pdf1.sum(axis=0)
     pdf1 = pdf1.astype(int)
     c_d = df.pivot_table('연번', '지역', aggfunc='count')
@@ -121,10 +120,9 @@ def seoul():
     map.save('static/img/seoul.html')
     img_file = os.path.join(current_app.root_path, './static/img/seoul.html')
     mtime = int(os.stat(img_file).st_mtime)
-    c_d.loc['기타'] = c_d.loc['기타'] + c_d.loc['타시도'] +c_d.loc['남양주시'] #+ c_d.loc['경기도하남시']
+    c_d.loc['기타'] = c_d.loc['기타'] + c_d.loc['타시도']
     c_d.drop('타시도',inplace=True)
-    c_d.drop('남양주시',inplace=True)
-    # c_d.drop('경기도하남시',inplace=True)
+    
     c_d.reset_index(inplace=True)
     month = list(pdf1.columns)
     total = list(pdf1.loc['합계'])
@@ -235,7 +233,7 @@ def seoul_chart():
             rows = s_chart(s_date,e_date)
         
         df = pd.DataFrame(rows, columns=['연번','확진일','지역','접촉력'])
-        df['지역'][(df['지역'] == '남양주시') | (df['지역'] == '타시도')] = '기타'
+        df['지역'][df['지역'] == '타시도'] = '기타'
         df['지역'][df['지역'] == ''] = np.nan
         df['확진월'] = df['확진일'].apply(lambda r: r.split('-')[1] + '월' )
         df['확진자'] = 1
