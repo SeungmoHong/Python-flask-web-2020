@@ -13,6 +13,7 @@ log/
 02.Flask/
 fontawesome-free-5.15.1-web/
 UCI HAR Dataset/
+test.ipynb
 # gitignore template for Jupyter Notebooks
 # website: http://jupyter.org/
 __pycache__/

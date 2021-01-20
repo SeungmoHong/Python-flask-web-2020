@@ -8,12 +8,12 @@
 {% endblock %}
 {% block weather %} {{ weather|safe() }} {% endblock %}
 {% block subtitle %}
-    <strong>이진 분류 유방암 데이터 {{index}}번 예측 결과</strong>
+    <strong>유방암 데이터 {{index}}번 환자의 예측 결과</strong>
 {% endblock %}
 {% block content %}
     <div class="row">
         <div class="col-4">
-            <table class="table table-bordered">
+            <table class="table table-bordered table-sm">
                 {% for i in range(4) %}
                 <tr>
                     <td>
@@ -27,7 +27,7 @@
             </table>
         </div>
         <div class="col-8"></div>
-        <div class="col-12"> <strong>{{index}}번 정보</strong> </div>
+        <div class="col-12"> <strong>{{index}}번 환자의 정보</strong> </div>
         <div class="col-4">
             <table class="table table-bordered table-sm">
                 {% for key,val in columns1.items() %}
@@ -69,8 +69,11 @@
                     </tr>
                 {% endfor %}
             </table>
+            <button class="btn btn-primary float-right"
+                                onclick="location.href='/classification/cancer'">돌아가기</button>
         </div>
-    </div> 
+        
+    </div>
 {% endblock %}
 {% block additional_body %}
 {% endblock %}

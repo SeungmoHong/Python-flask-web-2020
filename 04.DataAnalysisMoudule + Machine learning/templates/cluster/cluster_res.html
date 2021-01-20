@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block additional_head %}
+    <style>
+        /* Make the image fully responsive */
+        td img {
+            width: 100%;
+        }
+    </style>
+    <style>
+        th, td {
+            text-align: center;
+        }
+        table {
+	table-layout: fixed;
+}
+    </style>
+    
+{% endblock %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+    <strong>군집화</strong> - PCA and K-Means Clustering결과
+{% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-11">
+        <table class="table table-bordered table-sm">
+            <tr>
+                <td>
+                    데이터
+                </td>
+                <td>
+                    {{f_n}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    군집수(K)
+                </td>
+                <td>
+                    {{count}} 
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    차원축소
+                </td>
+                <td>
+                    K-Means Clustering
+                </td>
+            </tr>
+        </table>
+        <table class="table table-borderless">
+            <tr>
+                <td style="text-align: center;">
+                    <img src="{{url_for('static', filename='img/pca.png', q=mtime)}}"
+                            width="600" alt="시각화 이미지">
+                </td>
+            </tr>
+        </table>
+        <button class="btn btn-primary float-right"
+        onclick="location.href='/cluster'">돌아가기</button>
+    </div>
+    <div class="col-2">
+    </div>
+</div>   
+    
+{% endblock %}

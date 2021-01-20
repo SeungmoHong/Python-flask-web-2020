@@ -34,8 +34,6 @@ def cancer():
         index = int(request.form['index'])
         scaler = MinMaxScaler()
         df = pd.read_csv('./static/data/cancer_test.csv')
-        y_test = df.target.values
-        X_test = scaler.fit_transform(df.drop(columns='target', axis=1))
         scaled_test = scaler.fit_transform(df.iloc[:, :-1])
         test_data = scaled_test[index, :].reshape(1,-1)
 
@@ -49,7 +47,7 @@ def cancer():
         columns1 = dict(df.loc[index][:10])
         columns2 = dict(df.loc[index][10:20])
         columns3 = dict(df.loc[index][20:30])
-        cfs = ['정답 :', 'Logistic Regression 예측 :', 'Random Forest 예측 :', 'SVC 예측 :']
+        cfs = ['실제 값 :', 'Logistic Regression 예측 :', 'Random Forest 예측 :', 'SVC 예측 :']
         labels = [label, pred_lr[0], pred_rf[0], pred_sv[0]]
         labels = list(map(lambda x: '악성' if x == 0 else '양성', labels))
 
