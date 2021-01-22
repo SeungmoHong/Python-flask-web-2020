@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template, request, session, g
 from flask import current_app
-from werkzeug.utils import secure_filename
 from datetime import timedelta
 import os, folium, json, joblib
 import numpy as np

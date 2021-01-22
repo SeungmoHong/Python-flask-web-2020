@@ -5,6 +5,7 @@ from bp3_catogram.carto import carto_bp
 from bp4_crawling.crawling import crawling_bp
 from bp5_wordcloud.wc import wc_bp
 from bp6_classification.classification import cf_bp
+from bp7_advanced.advanced import ac_bp 
 from bp8_regression.regression import rg_bp 
 from bp9_cluster.cluster import cl_bp
 import os, json, logging ,sqlite3
@@ -34,6 +35,7 @@ app.register_blueprint(carto_bp, url_prefix='/cartogram')
 app.register_blueprint(crawling_bp, url_prefix='/crawling')
 app.register_blueprint(wc_bp, url_prefix='/wordcloud')
 app.register_blueprint(cf_bp, url_prefix='/classification')
+app.register_blueprint(ac_bp, url_prefix='/advanced')
 app.register_blueprint(rg_bp, url_prefix='/regression')
 app.register_blueprint(cl_bp, url_prefix='/cluster')
 

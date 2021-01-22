@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block additional_head %}
+{% endblock %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+    <strong>고급 분류 손글씨 숫자 예측하기</strong>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-8">
+            <form action="/advanced/digits" method="POST">
+                <table class="table table-borderless">
+                    <tr>
+                        <td>
+                            테스트 번호(0 ~ 449)
+                        </td>
+                        <td colspan="2">
+                            <input class="form-control" type="text" placeholder="번호를 입력하세요."  name="index">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <button type="submit" class="btn btn-primary">실행</button>&nbsp;&nbsp;&nbsp;
+                            <button type="reset" class="btn btn-secondary">취소</button>
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div class="col-3"></div>
+    </div> 
+{% endblock %}
+{% block additional_body %}
+{% endblock %}
