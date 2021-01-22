@@ -5,9 +5,10 @@ from datetime import datetime, timedelta
 import os
 import pandas as pd
 import pandas_datareader as pdr
+from sklearn.linear_model import LinearRegression
 from my_util.weather import get_weather
 
-stock_bp = Blueprint('stock_bp', __name__)
+rg_bp = Blueprint('rg_bp', __name__)
 
 def get_weather_main():
     weather = None
@@ -21,7 +22,7 @@ def get_weather_main():
         current_app.permanent_session_lifetime = timedelta(minutes=60)
     return weather
 kospi_dict, kosdaq_dict = {}, {}
-@stock_bp.before_app_first_request
+@rg_bp.before_app_first_request
 def before_app_first_request():
     kospi = pd.read_csv('./static/data/KOSPI.csv', dtype={'종목코드': str})
     for i in kospi.index:
@@ -29,13 +30,13 @@ def before_app_first_request():
     kosdaq = pd.read_csv('./static/data/KOSDAQ.csv', dtype={'종목코드': str})
     for i in kosdaq.index:
         kosdaq_dict[kosdaq['종목코드'][i]] = kosdaq['종목명'][i]
+menu = {'ho':0, 'da':0, 'ml':1, 'se':0, 'co':0, 'cg':0, 'cr':0, 'wc':0,
+            'cf':0, 'ac':0, 'rg':1, 'cl':0}
 
-
-@stock_bp.route('/', methods=['GET', 'POST'])
+@rg_bp.route('/stock', methods=['GET', 'POST'])
 def stock():
-    menu = {'ho':0, 'da':1, 'ml':0, 'se':0, 'co':0, 'cg':0, 'cr':0, 'st':1, 'wc':0}
     if request.method == 'GET':
-        return render_template('stock/stock.html', menu=menu, weather=get_weather(),
+        return render_template('regression/stock.html', menu=menu, weather=get_weather(),
                                 kospi=kospi_dict, kosdaq=kosdaq_dict)
     else:
         market = request.form['market']
@@ -70,5 +71,33 @@ def stock():
         fig.savefig(img_file)
         mtime = int(os.stat(img_file).st_mtime)
 
-        return render_template('stock/stock_res.html', menu=menu, weather=get_weather(), 
+        return render_template('regression/stock_res.html', menu=menu, weather=get_weather(), 
                                 mtime=mtime, company=company, code=code)
+
+@rg_bp.route('/iris', methods=['GET', 'POST'])
+def iris():
+    if request.method == 'GET':
+        return render_template('regression/iris.html', menu=menu, weather=get_weather())
+    else:
+        cols = {'sepal length (cm)': 0,'sepal width (cm)': 1,'petal length (cm)': 2,'petal width (cm)':3, 'class':4}
+        columns = ['sepal length (cm)','sepal width (cm)','petal length (cm)','petal width (cm)', 'class']
+        n_col = request.form['col']
+        col = cols[n_col]
+        del columns[col]
+        index = int(request.form['index'])
+        df = pd.read_csv('./static/data/iris_train.csv')
+        t_df = pd.read_csv('./static/data/iris_test.csv')
+        t_ori_val = t_df.iloc[index].values
+        t_val = t_df.drop(request.form['col'], axis=1).iloc[index].values
+        lr = LinearRegression()
+        col_num = list(range(5))
+        del col_num[col]
+        lr.fit(df.iloc[:,col_num].values, df.iloc[:,col].values)
+        tmp = 0
+        class_names = {0:'setosa', 1:'versicolor',2:'virginica'}
+        class_name = class_names[int(t_ori_val[4])]
+        for i in range(4):
+            tmp += t_val[i]*lr.coef_[i]
+        ans = tmp + lr.intercept_
+        return render_template('regression/iris_res.html', menu=menu, weather=get_weather(), ans=ans,t_val=t_val,t_ori_val=t_ori_val,
+        class_name=class_name,n_col=n_col,columns=columns,col=col, index=index)

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block additional_head %}
+    <style>
+        /* Make the image fully responsive */
+        td img {
+            width: 100%;
+        }
+    </style>
+    <style>
+        th, td {
+            text-align: center;
+        }
+        table {
+	table-layout: fixed;
+}
+    </style>
+    
+{% endblock %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+    <strong>아이리스 {{index}}번 결과</strong><small> - 아이리스 회귀</small>
+{% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+        <h6 style="text-align: right;">({{index}}번 정보)</h6>
+        <table class="table table-striped table-bordered table-sm">
+            {% for i in range(3)%}
+            <tr>
+                <td>{{columns[i]}}</td>
+                <td>{{t_val[i]}}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td>species</td>
+                <td>{{class_name}}</td>
+            </tr>
+        </table>
+        <br>
+        <table class="table table-striped table-bordered table-sm">
+            <tr>
+                <td>실제 값 {{n_col}}</td>
+                <td>{{t_ori_val[col]}}</td>
+            </tr>
+            <tr>
+                <td>예상 {{n_col}}</td>
+                <td>{{ans | round(2)}}</td>
+            </tr>
+        </table>
+        <button class="btn btn-primary float-right"
+        onclick="location.href='/regression/iris'">돌아가기</button>
+    </div>
+    <div class="col-2">
+    </div>
+</div>   
+    
+{% endblock %}
