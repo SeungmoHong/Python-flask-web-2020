@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+    <strong>보스턴 집값예측 하기 - </strong><small>회귀</small>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-7">
+            <form action="/regression/boston" method="POST" enctype="multipart/form-data">
+                <table class="table table-borderless">
+                    <tr>
+                        <td><label for="col">분류</label></td>
+                        <td>
+                            <select class="custom-select" id="col" name="col">
+                                {% for col in['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX',
+                                'PTRATIO', 'B', 'LSTAT', 'PRICE'] %}
+                                    <option value="{{col}}">{{col}}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="index">테스트 번호 고르기 (0 ~ 126)</label></td>
+                        <td>
+                            <input class="form-control" type="text" id="index" placeholder="번호를 입력하세요."  name="index">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2" style="text-align: center;">
+                            <button type="submit" class="btn btn-primary">실행</button>&nbsp;&nbsp;&nbsp;
+                            <button type="reset" class="btn btn-secondary">취소</button>
+                        </td>
+                    </tr>
+                </table>		
+            </form>
+        </div>
+        <div class="col-3"></div>
+    </div>
+{% endblock %}
+{% block additional_body %}
+
+{% endblock %}

@@ -117,12 +117,12 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item disabled" href="#"><strong>이중분류</strong></a>
                             <a class="dropdown-item" href="/classification/titanic">- 타이타닉</a>
-                            <a class="dropdown-item" href="#">- 피마 인디언</a>
+                            <a class="dropdown-item" href="/classification/pima">- 피마 인디언</a>
                             <a class="dropdown-item" href="/classification/cancer">- 유방암</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item disabled" href="#"><strong>다중분류</strong></a>
-                            <a class="dropdown-item" href="#">- 아이리스</a>
-                            <a class="dropdown-item" href="#">- 와인</a>
+                            <a class="dropdown-item" href="/classification/iris">- 아이리스</a>
+                            <a class="dropdown-item" href="/classification/wine">- 와인</a>
                         </div>
                     </li>
                     <div class="dropdown-divider"></div>
@@ -130,7 +130,7 @@
                         <a class="nav-link dropdown-toggle {% if menu.ac %}active{% endif %}" 
                            data-toggle="dropdown" href="#">고급분류</a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">뉴스그룹 분류</a>
+                            <a class="dropdown-item" href="/advanced/news">뉴스그룹 분류</a>
                             <a class="dropdown-item" href="/advanced/digits">MNIST 손글씨 분류</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item disabled" href="#"><strong>감성분석</strong></a>
@@ -143,8 +143,10 @@
                         <a class="nav-link dropdown-toggle {% if menu.rg %}active{% endif %}" 
                            data-toggle="dropdown" href="#">회귀</a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">당뇨병 BMI</a>
+                            <a class="dropdown-item" href="/regression/diabetes">당뇨병 BMI</a>
                             <a class="dropdown-item" href="/regression/iris">아이리스</a>
+                            <a class="dropdown-item" href="/regression/boston">보스턴 집값</a>
+                            <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="/regression/stock">주가예측</a>
                         </div>
                     </li>

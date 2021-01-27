@@ -56,27 +56,93 @@ def titanic():
         return render_template('classification/titanic.html', menu=menu, weather=get_weather())
     else :
         index = int(request.form['index'])
-        scaler = StandardScaler()
+        scaler = joblib.load('./static/model/titanic_scaler.pkl')
         ori_df = pd.read_csv('./static/data/titanic_test.csv')
         ori_df.fillna('정보없음', inplace=True)
         df = pd.read_csv('./static/data/n_titanic_test.csv')
         df_test_label = pd.read_csv('./static/data/titanic_test_label.csv')
-        scaled_test = scaler.fit_transform(df)
-        test_data = scaled_test[index].reshape(1,-1)
+        scaled_test = scaler.transform(df)
         lr = joblib.load('./static/model/titanic_lr.pkl')
         rf = joblib.load('./static/model/titanic_rf.pkl')
         sv = joblib.load('./static/model/titanic_sv.pkl')
         label = df_test_label['Survived'][index]
-        pred_lr = lr.predict(test_data)
-        pred_rf = rf.predict(test_data)
-        pred_sv = sv.predict(test_data)
+        pred_lr = lr.predict(scaled_test)
+        pred_rf = rf.predict(scaled_test)
+        pred_sv = sv.predict(scaled_test)
         cfs = ['실제 값 :', 'Logistic Regression 예측 :', 'Random Forest 예측 :', 'SVC 예측 :']
-        labels = [label, pred_lr[0], pred_rf[0], pred_sv[0]]
+        labels = [label, pred_lr[index], pred_rf[index], pred_sv[index]]
         labels = list(map(lambda x: '사망' if x == 0 else '생존', labels))
         ori_col = list(ori_df.columns)
         ori_data = list(ori_df.iloc[index].values)
         
         return render_template('classification/titanic_res.html', menu=menu, weather=get_weather(), labels=labels,cfs=cfs,index=index, ori_col=ori_col, ori_data=ori_data)
+@cf_bp.route('/pima', methods=['GET', 'POST'])
+def pima():
+    if request.method == 'GET':
+        return render_template('classification/pima.html', menu=menu, weather=get_weather())
+    else :
+        index = int(request.form['index'])
+        scaler = joblib.load('./static/model/diabetes_scaler.pkl')
+        df = pd.read_csv('./static/data/diabetes_test.csv')
+        scaled_test = scaler.fit_transform(df.iloc[:, :-1])
+        test_data = scaled_test[index, :].reshape(1,-1)
+        lr = joblib.load('./static/model/diabetes_lr.pkl')
+        rf = joblib.load('./static/model/diabetes_rf.pkl')
+        sv = joblib.load('./static/model/diabetes_sv.pkl')
+        label = df.iloc[index, -1]
+        pred_lr = lr.predict(test_data)
+        pred_rf = rf.predict(test_data)
+        pred_sv = sv.predict(test_data)
+        labels = [label, pred_lr[0], pred_rf[0], pred_sv[0]]
+        cfs = ['실제 값 :', 'Logistic Regression 예측 :', 'Random Forest 예측 :', 'SVC 예측 :']
+        columns = dict(df.loc[index][:-1])
+        labels = list(map(lambda x: '정상' if x == 0 else '당뇨병', labels))
+        return render_template('classification/pima_res.html', menu=menu, weather=get_weather(), labels=labels,cfs=cfs, columns=columns,index=index)
+@cf_bp.route('/iris', methods=['GET', 'POST'])
+def iris():
+    if request.method == 'GET':
+        return render_template('classification/iris.html', menu=menu, weather=get_weather())
+    else:
+        index = int(request.form['index'])
+        scaler = joblib.load('./static/model/iris_scaler.pkl')
+        df = pd.read_csv('./static/data/iris_test.csv')
+        scaled_test = scaler.fit_transform(df.iloc[:, :-1])
+        test_data = scaled_test[index, :].reshape(1,-1)
+        lr = joblib.load('./static/model/iris_lr.pkl')
+        rf = joblib.load('./static/model/iris_rf.pkl')
+        sv = joblib.load('./static/model/iris_sv.pkl')
+        label = df.iloc[index, -1]
+        pred_lr = lr.predict(test_data)
+        pred_rf = rf.predict(test_data)
+        pred_sv = sv.predict(test_data)
+        labels = [label, pred_lr[0], pred_rf[0], pred_sv[0]]
+        cfs = ['실제 값 :', 'Logistic Regression 예측 :', 'Random Forest 예측 :', 'SVC 예측 :']
+        columns = dict(df.loc[index][:-1])
+        labels = list(map(lambda x: 'setosa' if x == 0 else 'versicolor' if x == 1 else 'virginica', labels))
+        return render_template('classification/iris_res.html', menu=menu, weather=get_weather(), labels=labels,cfs=cfs, columns=columns,index=index)
+
+@cf_bp.route('/wine', methods=['GET', 'POST'])
+def wine():
+    if request.method == 'GET':
+        return render_template('classification/wine.html', menu=menu, weather=get_weather())
+    else:
+        index = int(request.form['index'])
+        scaler = joblib.load('./static/model/wine_scaler.pkl')
+        df = pd.read_csv('./static/data/wine_test.csv')
+        scaled_test = scaler.fit_transform(df.iloc[:, :-1])
+        test_data = scaled_test[index, :].reshape(1,-1)
+        lr = joblib.load('./static/model/wine_lr.pkl')
+        rf = joblib.load('./static/model/wine_rf.pkl')
+        sv = joblib.load('./static/model/wine_sv.pkl')
+        label = df.iloc[index, -1]
+        pred_lr = lr.predict(test_data)
+        pred_rf = rf.predict(test_data)
+        pred_sv = sv.predict(test_data)
+        labels = [label, pred_lr[0], pred_rf[0], pred_sv[0]]
+        cfs = ['실제 값 :', 'Logistic Regression 예측 :', 'Random Forest 예측 :', 'SVC 예측 :']
+        columns = dict(df.loc[index][:-1])
+        
+        return render_template('classification/wine_res.html', menu=menu, weather=get_weather(), labels=labels,cfs=cfs, columns=columns,index=index)
 
 
         

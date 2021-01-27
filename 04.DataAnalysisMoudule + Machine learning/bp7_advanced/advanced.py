@@ -7,6 +7,7 @@ import numpy as np
 import pandas as pd
 import sklearn.datasets as sd
 import matplotlib.pyplot as plt 
+from sklearn.datasets import fetch_20newsgroups
 from my_util.weather import get_weather
 
 
@@ -59,3 +60,37 @@ def digits():
         mtime = int(os.stat(img_file).st_mtime)
        
         return render_template('advanced/digits_res.html', menu=menu, weather=get_weather(), acs=acs, labels=labels, mtime=mtime, index=index)
+@ac_bp.route('/news', methods=['GET', 'POST'])
+def news():
+    test_news = fetch_20newsgroups(subset='test', random_state=156,
+                                remove=('header', 'footer', 'quotes'))
+    if request.method == 'GET':
+        return render_template('advanced/news.html', menu=menu, weather=get_weather())
+    else :
+        index = int(request.form['index'])
+        
+        features = test_news.target_names
+        test_df = pd.DataFrame(test_news.data)
+        test_df['target'] = test_news.target
+        X_test = test_df[test_df[0] != ''][0]
+        y_test = test_df[test_df[0] != '']['target']
+        X_test.reset_index(drop=True,inplace=True)
+        y_test.reset_index(drop=True,inplace=True)
+        tfidf_vect = joblib.load('./static/model/news_tfidf_vect.pkl')
+        count_vect = joblib.load('./static/model/news_count_vect.pkl')
+        X_test_tfidf = tfidf_vect.transform(X_test)
+        X_test_count = count_vect.transform(X_test)
+        tf_lr = joblib.load('./static/model/news_tf_lr.pkl')
+        tf_sv = joblib.load('./static/model/news_tf_sv.pkl')
+        co_lr = joblib.load('./static/model/news_co_lr.pkl')
+        label = y_test.iloc[index]
+        tr_lr_pred = tf_lr.predict(X_test_tfidf)[index]
+        tr_sv_pred = tf_sv.predict(X_test_tfidf)[index]
+        co_lr_pred = co_lr.predict(X_test_count)[index]
+        news = X_test[index]
+        ans = {'실제 분류' : features[label], 'TfidfVectorizer + LogisticRegression' : features[tr_lr_pred], 'TfidfVectorizer + SVC' : features[tr_sv_pred], 'CountVectorizer + LogisticRegression' : features[co_lr_pred]}           
+        return render_template('advanced/news_res.html', menu=menu, weather=get_weather(), ans=ans, index=index, news=news)
+        
+        
+
+        
