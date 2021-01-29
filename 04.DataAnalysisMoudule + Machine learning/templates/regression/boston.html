@@ -1,44 +1,68 @@
 {% extends "base.html" %}
+{% block additional_head %}
+    <style>
+        td { text-align: center; }
+    </style>
+{% endblock %}
 {% block weather %} {{ weather|safe() }} {% endblock %}
 {% block subtitle %}
-    <strong>보스턴 집값예측 하기 - </strong><small>회귀</small>
+    <strong>보스톤 집값 회귀</strong>
 {% endblock %}
 {% block content %}
     <div class="row">
-        <div class="col-2"></div>
-        <div class="col-7">
-            <form action="/regression/boston" method="POST" enctype="multipart/form-data">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <form action="/regression/boston" method="POST">
                 <table class="table table-borderless">
                     <tr>
-                        <td><label for="col">분류</label></td>
-                        <td>
-                            <select class="custom-select" id="col" name="col">
-                                {% for col in['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX',
-                                'PTRATIO', 'B', 'LSTAT', 'PRICE'] %}
-                                    <option value="{{col}}">{{col}}</option>
-                                {% endfor %}
-                            </select>
-                        </td>
+                        <td><label for="index">테스트 데이터(0 ~ 126)</label></td>
+                        <td><input type="text" class="form-control" id="index" name="index" placeholder="번호를 입력하세요."></td>
                     </tr>
                     <tr>
-                        <td><label for="index">테스트 번호 고르기 (0 ~ 126)</label></td>
+                        <td rowspan="2"><label for="feature">Feature 선택 <br>모두 선택</label>
+                            <br><input type="checkbox" class="form-check-input ml-1" id="selectAll">
+                        </td>
                         <td>
-                            <input class="form-control" type="text" id="index" placeholder="번호를 입력하세요."  name="index">
+                            {% for feature in feature_list %}
+                                <div class="form-check-inline">
+                                    <label class="form-check-label" for="boston{{loop.index}}">
+                                        <input type="checkbox" class="form-check-input" id="boston{{loop.index}}" name="feature" value="{{feature}}">{{feature}}
+                                    </label>
+                                </div>
+                                {% if loop.index==7 %}
+                                    <br>
+                                {% endif %}
+                            {% endfor %}
                         </td>
                     </tr>
-
                     <tr>
                         <td colspan="2" style="text-align: center;">
-                            <button type="submit" class="btn btn-primary">실행</button>&nbsp;&nbsp;&nbsp;
+                            <button type="submit" class="btn btn-primary mr-2">실행</button>
                             <button type="reset" class="btn btn-secondary">취소</button>
                         </td>
                     </tr>
                 </table>		
             </form>
         </div>
-        <div class="col-3"></div>
+        <div class="col-1"></div>
     </div>
 {% endblock %}
 {% block additional_body %}
-
+    <script>
+        $('#selectAll').on('input', () => {
+            for (let i=1; i<=13; i++) {
+                let boston = '#boston'+i
+                if ($('#selectAll')[0].checked) {
+                    $(boston)[0].checked = true
+                } else {
+                    $(boston)[0].checked = false
+                }
+                /* let boston = 'boston'+i 
+                if (document.getElementById('selectAll').checked)
+                    document.getElementById(boston).checked = true
+                else
+                    document.getElementById(boston).checked = false */
+            }
+        });
+    </script>
 {% endblock %}

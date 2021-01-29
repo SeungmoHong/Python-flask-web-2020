@@ -33,7 +33,7 @@ def digits():
     if request.method == 'GET':
         return render_template('advanced/digits.html', menu=menu, weather=get_weather())
     else :
-        index = int(request.form['index'])
+        index = int(request.form['index'] or '0')
         digits = sd.load_digits()
         df_test = pd.read_csv('./static/data/digits_test.csv')
         test_index = df_test['index'][index] # 실제 인덱스
@@ -67,7 +67,7 @@ def news():
     if request.method == 'GET':
         return render_template('advanced/news.html', menu=menu, weather=get_weather())
     else :
-        index = int(request.form['index'])
+        index = int(request.form['index'] or '0')
         
         features = test_news.target_names
         test_df = pd.DataFrame(test_news.data)
@@ -90,7 +90,37 @@ def news():
         news = X_test[index]
         ans = {'실제 분류' : features[label], 'TfidfVectorizer + LogisticRegression' : features[tr_lr_pred], 'TfidfVectorizer + SVC' : features[tr_sv_pred], 'CountVectorizer + LogisticRegression' : features[co_lr_pred]}           
         return render_template('advanced/news_res.html', menu=menu, weather=get_weather(), ans=ans, index=index, news=news)
-        
+@ac_bp.route('/imdb', methods=['GET', 'POST'])
+def imdb():
+    if request.method == 'GET':
+        return render_template('advanced/IMDB.html', menu=menu, weather=get_weather())
+    else :
+        tf_lr = joblib.load('./static/model/tf_lr_imdb.pkl')
+        co_lr = joblib.load('./static/model/co_lr_imdb.pkl')
+        evaluation = ['부정', '긍정']
+        if request.form['sel'] == 'test_data':
+            index = int(request.form['index'] or '0')
+            df_test = pd.read_csv('./static/data/imdb_test.csv')
+            X_test = df_test.iloc[index].review
+            y_test = df_test.iloc[index].sentiment
+            tr_lr_pred = tf_lr.predict([X_test])
+            co_lr_pred = co_lr.predict([X_test])
+            ans = {'실제 값 :' : evaluation[y_test] ,
+                   'TfidfVectorizer + LogisticRegression' : evaluation[tr_lr_pred[0]],
+                   'CountVectorizer + LogisticRegression' : evaluation[co_lr_pred[0]]}
+            item = [request.form['index'] + '번', X_test]
+        else :
+            X_test = request.form['test']
+            tr_lr_pred = tf_lr.predict([X_test])
+            co_lr_pred = co_lr.predict([X_test])
+            ans = {'TfidfVectorizer + LogisticRegression' : evaluation[tr_lr_pred[0]],
+                   'CountVectorizer + LogisticRegression' : evaluation[co_lr_pred[0]]}
+            item = ['사용자 테스트' , X_test]
+        return render_template('advanced/IMDB_res.html', menu=menu, weather=get_weather(), ans=ans, item=item)
+            
+            
+
+            
         
 
         

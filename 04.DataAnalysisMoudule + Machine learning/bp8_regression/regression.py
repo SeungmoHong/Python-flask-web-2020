@@ -86,7 +86,7 @@ def iris():
         n_col = request.form['col']
         col = cols[n_col]
         del columns[col]
-        index = int(request.form['index'])
+        index = int(request.form['index'] or '0')
         df = pd.read_csv('./static/data/iris_train.csv')
         t_df = pd.read_csv('./static/data/iris_test.csv')
         t_ori_val = t_df.iloc[index].values
@@ -109,30 +109,31 @@ def iris():
 @rg_bp.route('/boston', methods=['GET', 'POST'])
 def boston():
     if request.method == 'GET':
-        return render_template('regression/boston.html', menu=menu, weather=get_weather())
-    else:
-        cols = {'CRIM' : 0, 'ZN' : 1, 'INDUS' :2, 'CHAS': 3, 'NOX': 4, 'RM' : 5, 'AGE' :6, 'DIS' : 7,
-        'RAD' : 8, 'TAX' :9,'PTRATIO' :10, 'B' : 11, 'LSTAT': 12, 'PRICE' :13}
-        columns = ['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX','PTRATIO', 'B', 'LSTAT', 'PRICE']
-        n_col = request.form['col']
-        col = cols[n_col]
-        del columns[col]
-        index = int(request.form['index'])
-        df = pd.read_csv('./static/data/boston_train.csv')
-        t_df = pd.read_csv('./static/data/boston_test.csv')
-        t_ori_val = t_df.iloc[index].values
-        t_val = t_df.drop(request.form['col'], axis=1).iloc[index].values
-        lr = LinearRegression()
-        col_num = list(range(14))
-        del col_num[col]
-        lr.fit(df.iloc[:,col_num].values, df.iloc[:,col].values)
-        
-        tmp = 0
-        for i in range(13):
-            tmp += t_val[i]*lr.coef_[i]
-        ans = tmp + lr.intercept_  #lr.predict(X_test)
+        feature_list = ['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX', 'PTRATIO', 'B', 'LSTAT']
 
-        return render_template('regression/boston_res.html', menu=menu, weather=get_weather(), ans=ans,t_val=t_val,t_ori_val=t_ori_val,n_col=n_col,columns=columns,col=col, index=index)
+        return render_template('regression/boston.html', menu=menu, weather=get_weather(),feature_list=feature_list)
+    else:
+        index = int(request.form['index'] or '0')
+        feature_list = request.form.getlist('feature')
+        if len(feature_list) == 0:
+            feature_list = ['RM', 'LSTAT']
+        df = pd.read_csv('static/data/boston_train.csv')
+        X = df[feature_list].values
+        y = df.PRICE.values
+
+        lr = LinearRegression()
+        lr.fit(X, y)
+        weight, bias = lr.coef_, lr.intercept_
+
+        df_test = pd.read_csv('static/data/boston_test.csv')
+        X_test = df_test[feature_list].values[index, :]
+        y_test = df_test.PRICE[index]
+        pred = np.dot(X_test, weight.T) + bias      # tmp = lr.predict(X_test.reshape(1,-1))
+        pred = np.round(pred, 2)                    # pred = np.round(tmp[0])
+
+        result_dict = {'index':index, 'feature':feature_list, 'y':y_test, 'pred':pred}
+        org = dict(zip(df.columns[:-1], df_test.iloc[index, :-1]))
+        return render_template('regression/boston_res.html', menu=menu, weather=get_weather(), res=result_dict, org=org)
 
 @rg_bp.route('/diabetes', methods=['GET', 'POST'])
 def diabetes():
@@ -140,7 +141,7 @@ def diabetes():
         return render_template('regression/diabetes.html', menu=menu, weather=get_weather())
     else:
         col = request.form['col']
-        index = int(request.form['index'])
+        index = int(request.form['index'] or '0')
         df = pd.read_csv('./static/data/l_diabetes_train.csv')
         df_test = pd.read_csv('./static/data/l_diabetes_test.csv')
         X = df[col].values.reshape(-1,1)

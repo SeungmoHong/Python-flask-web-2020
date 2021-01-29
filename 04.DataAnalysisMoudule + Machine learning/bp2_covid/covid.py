@@ -91,7 +91,7 @@ def seoul():
     df = pd.DataFrame(rows, columns=['연번','확진일','지역','접촉력'])
     date = df['확진일'][df.index[-1]]
     df['지역'][df['지역'] == ''] = np.nan
-    df['확진월'] = df['확진일'].apply(lambda r: r.split('-')[1] + '월' )
+    df['확진월'] = df['확진일'].apply(lambda r:r.split('-')[0]+'-' + r.split('-')[1] )
     df['확진자'] = 1
     pdf1 = pd.pivot_table(df,               
                     index = '지역',    
@@ -131,7 +131,7 @@ def seoul_gu(gu):
     gu = gu
     rows = seoul_data()
     df = pd.DataFrame(rows, columns=['연번','확진일','지역','접촉력'])
-    df['확진월'] = df['확진일'].apply(lambda r: r.split('-')[1] + '월' )
+    df['확진월'] = df['확진일'].apply(lambda r: r.split('-')[0]+ '-' + r.split('-')[1]  )
     df['확진자'] = 1
     pdf1 = pd.pivot_table(df,               
                     index = '지역',    

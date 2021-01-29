@@ -13,7 +13,7 @@
                         <td><label for="col">분류</label></td>
                         <td>
                             <select class="custom-select" id="col" name="col">
-                                {% for col in ['age','sex','bmi','bp'] %}
+                                {% for col in ['age','bmi','bp'] %}
                                     <option value="{{col}}">{{col}}</option>
                                 {% endfor %}
                             </select>
@@ -36,6 +36,8 @@
             </form>
         </div>
         <div class="col-3"></div>
+
+
     </div>
 {% endblock %}
 {% block additional_body %}
