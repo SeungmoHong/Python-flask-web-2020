@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block additional_head %}
+    <style>
+        /* Make the image fully responsive */
+        td img {
+            width: 100%;
+        }
+    </style>
+    <style>
+        th, td {
+            text-align: center;
+        }
+        table {
+	table-layout: fixed;
+}
+    </style>
+    
+{% endblock %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+    <strong>{{item[0]}} 결과</strong><small> - 네이버 영화평</small>
+{% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+        <table class="table table-striped table-bordered table-sm">
+            {% for k,v in ans.items() %}
+            <tr>
+                <td>{{k}}</td>
+                <td>{{v}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <button class="btn btn-primary float-right"
+        onclick="location.href='/advanced/nmsc'">돌아가기</button>
+        <br>
+        <p style="text-align: center;">({{item[0]}} 내용)</p>
+    </div>
+    <div class="col-2">
+    </div>
+    <div class="col-1"></div>
+    <div class="col-10"><p style="text-align: center;">{{item[1]}}</p></div>
+    <div class="col-1"></div>
+</div>   
+    
+{% endblock %}

@@ -9,6 +9,9 @@ import sklearn.datasets as sd
 import matplotlib.pyplot as plt 
 from sklearn.datasets import fetch_20newsgroups
 from my_util.weather import get_weather
+from konlpy.tag import Okt
+
+
 
 
 ac_bp = Blueprint('ac_bp', __name__)
@@ -117,7 +120,52 @@ def imdb():
                    'CountVectorizer + LogisticRegression' : evaluation[co_lr_pred[0]]}
             item = ['사용자 테스트' , X_test]
         return render_template('advanced/IMDB_res.html', menu=menu, weather=get_weather(), ans=ans, item=item)
-            
+
+@ac_bp.route('/nmsc', methods=['GET', 'POST'])
+def nmsc():
+    if request.method == 'GET':
+        return render_template('advanced/nmsc.html', menu=menu, weather=get_weather())
+    else :
+        okt = Okt()
+        stopwords = ['의','가','이','은','들','는','좀','잘','걍','과','도','를','으로','자','에','와','한','하다','을']
+        evaluation = ['부정', '긍정']
+        tf_lr = joblib.load('./static/model/tf_lr_nmsc.pkl')
+        tf_nb = joblib.load('./static/model/tf_nb_nmsc.pkl')
+        co_lr = joblib.load('./static/model/co_lr_nmsc.pkl')
+        co_nb = joblib.load('./static/model/co_nb_nmsc.pkl')
+        if request.form['sel'] == 'test_data':
+            index = int(request.form['index'] or '0')
+            df_test = pd.read_csv('./static/data/nmsc_test.tsv',sep ='\t')
+            text = df_test.iloc[index].document
+            morphs = okt.morphs(text, stem=True)
+            X_test = ' '.join([word for word in morphs if not word in stopwords])
+            y_test = df_test.iloc[index].label
+            tf_lr_pred = tf_lr.predict([X_test])
+            tf_nb_pred = tf_nb.predict([X_test])
+            co_lr_pred = co_lr.predict([X_test])
+            co_nb_pred = co_nb.predict([X_test])
+            ans = {'실제 값 :' : evaluation[y_test] ,
+                'TfidfVectorizer + LogisticRegression' : evaluation[tf_lr_pred[0]],
+                'TfidfVectorizer + 나이브 베이즈' : evaluation[tf_nb_pred[0]],
+                'CountVectorizer + LogisticRegression' : evaluation[co_lr_pred[0]],
+                'CountVectorizer + 나이브 베이즈' : evaluation[co_nb_pred[0]]}
+            item = [request.form['index'] + '번', text]
+
+        else :
+            text = request.form['test']
+            morphs = okt.morphs(text, stem=True)
+            X_test = ' '.join([word for word in morphs if not word in stopwords])
+            tf_lr_pred = tf_lr.predict([X_test])
+            tf_nb_pred = tf_nb.predict([X_test])
+            co_lr_pred = co_lr.predict([X_test])
+            co_nb_pred = co_nb.predict([X_test])
+            ans = {'TfidfVectorizer + LogisticRegression' : evaluation[tf_lr_pred[0]],
+                    'TfidfVectorizer + 나이브 베이즈' : evaluation[tf_nb_pred[0]],
+                    'CountVectorizer + LogisticRegression' : evaluation[co_lr_pred[0]],
+                    'CountVectorizer + 나이브 베이즈' : evaluation[co_nb_pred[0]]}
+            item = ['사용자 테스트' , text]
+        return render_template('advanced/nmsc_res.html', menu=menu, weather=get_weather(), ans=ans, item=item)
+    
             
 
             
