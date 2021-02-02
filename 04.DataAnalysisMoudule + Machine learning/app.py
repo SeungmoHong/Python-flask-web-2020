@@ -8,6 +8,7 @@ from bp6_classification.classification import cf_bp
 from bp7_advanced.advanced import ac_bp 
 from bp8_regression.regression import rg_bp 
 from bp9_cluster.cluster import cl_bp
+from bp10_ai.ai import ai_bp
 import os, json, logging ,sqlite3
 from logging.config import dictConfig
 from datetime import timedelta
@@ -38,6 +39,7 @@ app.register_blueprint(cf_bp, url_prefix='/classification')
 app.register_blueprint(ac_bp, url_prefix='/advanced')
 app.register_blueprint(rg_bp, url_prefix='/regression')
 app.register_blueprint(cl_bp, url_prefix='/cluster')
+app.register_blueprint(ai_bp, url_prefix='/ai')
 
 with open('./logging.json', 'r') as file:
     config = json.load(file)

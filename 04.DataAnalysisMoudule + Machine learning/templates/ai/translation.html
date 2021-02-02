@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+    <strong>번역 </strong><small>- AI</small>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <form action="/ai/translation" method="POST" enctype="multipart/form-data">
+                <table class="table table-borderless">
+                    <tr>
+                        <td>
+                            <label class="form-check-label">
+                                언어 선택
+                            </label>
+                        </td>
+                        <td>
+                            <div class="form-check" >
+                                <label class="form-check-label">
+                                  <input type="radio" class="form-check-input" name="lang" id="lang" value="en" checked>영어
+                                </label>
+                                <label class="form-check-label" style="margin-left: 25px;">
+                                  <input type="radio" class="form-check-input" name="lang" id="lang" value="zh-CN">중국어
+                                </label>
+                                <label class="form-check-label" style="margin-left: 25px;">
+                                    <input type="radio" class="form-check-input" name="lang" id="lang" value="ja">일본어
+                                </label>
+                                <label class="form-check-label" style="margin-left: 25px;">
+                                  <input type="radio" class="form-check-input" name="lang" id="lang" value="es">스페인어
+                                </label>
+                            <div class="form-check"></div>
+                                <label class="form-check-label">
+                                  <input type="radio" class="form-check-input" name="lang" id="lang" value="fr">프랑스어
+                                </label>
+                                <label class="form-check-label" style="margin-left: 20px;">
+                                  <input type="radio" class="form-check-input" name="lang" id="lang" value="vi">베트남어
+                                </label>
+                                <label class="form-check-label" style="margin-left: 20px;">
+                                  <input type="radio" class="form-check-input" name="lang" id="lang" value="th">태국어
+                                </label>
+                                <label class="form-check-label" style="margin-left: 20px;">
+                                  <input type="radio" class="form-check-input" name="lang" id="lang" value="id">인도네시아어
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="form-check-label">
+                                텍스트(한글)
+                            </label>
+                        </td>
+                        <td>
+                            <textarea name="test" id="test" cols="60" rows="5"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td colspan="2" style="text-align: center;">
+                            <button type="submit" class="btn btn-primary">실행</button>&nbsp;&nbsp;&nbsp;
+                            <button type="reset" class="btn btn-secondary">취소</button>
+                        </td>
+                    </tr>
+                </table>		
+            </form>
+        </div>
+        <div class="col-2"></div>
+    </div>
+{% endblock %}
+{% block additional_body %}
+    <script>
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
+{% endblock %}

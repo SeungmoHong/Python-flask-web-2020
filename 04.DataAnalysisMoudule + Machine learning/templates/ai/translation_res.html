@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+    <strong>번역 결과 </strong><small>- AI</small>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <form action="/ai/translation" method="POST" enctype="multipart/form-data">
+                <table class="table table-bordered">
+                    <tr>
+                        <td>
+                            분류
+                        </td>
+                        <td>
+                            한국어
+                        </td>
+                        <td>
+                            번역 결과 ({{ans[0]}})
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            파파고(네이버)
+                        </td>
+                        <td>
+                            <p>{{text}}</p>
+                        </td>
+                        <td>
+                            <p>{{ans[1]}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            카카오 번역
+                        </td>
+                        <td>
+                            <p>{{text}}</p>
+                        </td>
+                        <td>
+                            <p>{{ans[2]}}</p>
+                        </td>
+                    </tr>
+                </table>		
+            </form>
+            <button class="btn btn-primary float-right"
+                        onclick="location.href='/ai/translation'">돌아가기</button>
+        </div>
+        <div class="col-2"></div>
+    </div>
+{% endblock %}
+{% block additional_body %}
+{% endblock %}

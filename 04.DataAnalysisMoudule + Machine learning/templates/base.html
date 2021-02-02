@@ -156,6 +156,15 @@
                            href="{% if menu.cl %}#{% else %}/cluster{% endif %}">군집화 / PCA</a>
                     </li>
                     <div class="dropdown-divider"></div>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle {% if menu.ai %}active{% endif %}" 
+                           data-toggle="dropdown" href="#">AI</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/ai/translation">번역</a>
+                            <a class="dropdown-item" href="/ai/voice">음성합성</a>
+                        </div>
+                    </li>
+                    <div class="dropdown-divider"></div>
                 </ul>
             </div>
             <div class="col-10">
