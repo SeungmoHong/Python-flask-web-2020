@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+    <strong>번역결과 감성분석 </strong><small>- AI</small>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <form action="/ai/evaluate" method="POST" enctype="multipart/form-data">
+                <table class="table table-borderless">
+                    <tr>
+                        <td>
+                            <label class="form-check-label">
+                                언어 선택
+                            </label>
+                        </td>
+                        <td>
+                            <div class="form-check" >
+                                <label class="form-check-label">
+                                  <input type="radio" class="form-check-input" name="lang" id="lang" value="kr_en" checked>한글 -> 영어
+                                </label>
+                                <label class="form-check-label" style="margin-left: 40px;">
+                                  <input type="radio" class="form-check-input" name="lang" id="lang" value="en_kr">영어 -> 한글
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="form-check-label">
+                                텍스트
+                            </label>
+                        </td>
+                        <td>
+                            <textarea name="test" id="test" cols="60" rows="5"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td colspan="2" style="text-align: center;">
+                            <button type="submit" class="btn btn-primary">실행</button>&nbsp;&nbsp;&nbsp;
+                            <button type="reset" class="btn btn-secondary">취소</button>
+                        </td>
+                    </tr>
+                </table>		
+            </form>
+        </div>
+        <div class="col-2"></div>
+    </div>
+{% endblock %}
+{% block additional_body %}
+{% endblock %}

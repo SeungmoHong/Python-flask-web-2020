@@ -8,7 +8,7 @@
 {% endblock %}
 {% block weather %} {{ weather|safe() }} {% endblock %}
 {% block subtitle %}
-    <strong>유방암 데이터 {{index}}번 환자의 예측 결과</strong>
+    <strong>테스트 셋 {{index}}번 예측 결과</strong>
 {% endblock %}
 {% block content %}
     <div class="row">
@@ -28,7 +28,7 @@
             </table>
         </div>
         <div class="col-4"></div>
-        <div class="col-12"> <strong>{{index}}번 환자의 정보</strong> </div>
+        <div class="col-12"> <strong>테스트 셋 {{index}}번 정보</strong> </div>
         <div class="col-4">
             <table class="table table-bordered table-sm">
                 {% for key,val in columns1.items() %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+    <strong>결과 ({{ans[0]}}) </strong><small>- AI</small>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <table class="table table-striped  table-borderless">
+                <tr>
+                    <td>원본</td>
+                    <td>{{ans[1]}}</td>
+                </tr>
+                <tr>
+                    <td>번역결과</td>
+                    <td>{{ans[2]}}</td>
+                </tr>
+                <tr>
+                    <td>평가결과</td>
+                    <td>{{ans[3]}}</td>
+                </tr>
+            </table>		
+            
+            <button class="btn btn-primary float-right"
+                        onclick="location.href='/ai/evaluate'">돌아가기</button>
+        </div>
+        <div class="col-2"></div>
+    </div>
+{% endblock %}
+{% block additional_body %}
+{% endblock %}

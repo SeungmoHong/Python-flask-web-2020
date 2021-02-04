@@ -3,7 +3,7 @@
 {% endblock %}
 {% block weather %} {{ weather|safe() }} {% endblock %}
 {% block subtitle %}
-    <strong>이진 분류 유방암 데이터의 악성, 양성 예측하기</strong>
+    <strong>유방암 데이터 악성, 양성 예측</strong>
 {% endblock %}
 {% block content %}
     <div class="row">
@@ -13,7 +13,7 @@
                 <table class="table table-borderless">
                     <tr>
                         <td>
-                            유방암 환자 번호 (0 ~ 142)
+                            테스트 셋 번호 (0 ~ 142)
                         </td>
                         <td colspan="2">
                             <input class="form-control" type="text" placeholder="번호를 입력하세요."  name="index">

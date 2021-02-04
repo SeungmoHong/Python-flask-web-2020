@@ -2,8 +2,9 @@ from flask import Blueprint, render_template, request, session, g
 from flask import current_app
 from werkzeug.utils import secure_filename
 from datetime import timedelta
-import os, json, requests
+import os, json, requests, joblib
 from urllib.parse import quote
+from konlpy.tag import Okt
 from my_util.weather import get_weather
 
 
@@ -111,4 +112,100 @@ def voice():
         ans = [request.form['test'], request.form['speaker'], request.form['speed']+'%', request.form['pitch']+'%']
         return render_template('ai/voice_res.html', menu=menu, weather=get_weather(), mtime=mtime, ans=ans)
 
+@ai_bp.route('/evaluate', methods=['GET', 'POST'])
+def evaluate():
+    if request.method == 'GET':
+        return render_template('ai/translation_evaluation.html', menu=menu, weather=get_weather())
+    else:
+        okt = Okt()
+        stopwords = ['의','가','이','은','들','는','좀','잘','걍','과','도','를','으로','자','에','와','한','하다','을', '의']
+        with open('keys/papago_key.json') as nkey:
+            json_str = nkey.read(100)
+        json_obj = json.loads(json_str)
+        client_id = list(json_obj.keys())[0]
+        client_secret = json_obj[client_id]
+        url = "https://naveropenapi.apigw.ntruss.com/nmt/v1/translation"
+
+        evaluation = ['부정', '긍정']
+        text = request.form['test']
+        lang = request.form['lang']
+        if lang == 'kr_en' :
+            source = 'ko'
+            target = 'en'
+            title = '한글 -> 영어'
+            item = joblib.load('./static/model/tf_lr_imdb.pkl')
+            X_test = text
+        else :
+            source = 'en'
+            target = 'ko'
+            title = '영어 -> 한글'
+            item  = joblib.load('./static/model/tf_nb_nmsc.pkl')
+            morphs = okt.morphs(text, stem=True)
+            X_test = ' '.join([word for word in morphs if not word in stopwords])
         
+        val = {
+            "source": source,
+            "target": target,
+            "text": text
+        }
+        headers = {
+        "X-NCP-APIGW-API-KEY-ID": client_id,
+        "X-NCP-APIGW-API-KEY": client_secret
+        }
+        response = requests.post(url,  data=val, headers=headers)
+        result = json.loads(response.text)
+        pred = item.predict([X_test])
+        ans = [title,text,result['message']['result']['translatedText'],evaluation[pred[0]]]
+        
+        return render_template('ai/translation_evaluation_res.html', menu=menu, weather=get_weather(), ans=ans)
+
+@ai_bp.route('/emotion', methods=['GET', 'POST'])
+def emotion():
+    if request.method == 'GET':
+        return render_template('ai/emotion.html', menu=menu, weather=get_weather())
+    else:
+        okt = Okt()
+        stopwords = ['의','가','이','은','들','는','좀','잘','걍','과','도','를','으로','자','에','와','한','하다','을', '의']
+        evaluation = ['부정', '긍정']
+        en_item = joblib.load('./static/model/tf_lr_imdb.pkl')
+        kr_item  = joblib.load('./static/model/tf_nb_nmsc.pkl')
+        with open('keys/kakaoaikey.txt') as kfile:
+            kai_key = kfile.read(100)
+        text = request.form['test']
+        url = 'https://dapi.kakao.com/v3/translation/language/detect?query='+quote(text)
+        result = requests.get(url,
+            headers={"Authorization": "KakaoAK "+kai_key}).json()
+        lang = result['language_info'][0]['code']
+        if lang == 'kr':
+            target = 'en'
+            result = requests.get(generate_url(text, lang, target),
+                headers={"Authorization": "KakaoAK "+kai_key}).json()
+            tmp_ans = result['translated_text']
+            kakao_ans = '\n'.join([tmp[0] for tmp in tmp_ans])
+            morphs = okt.morphs(text, stem=True)
+            X_test = ' '.join([word for word in morphs if not word in stopwords])
+            kr_pred = kr_item.predict([X_test])
+            en_pred = en_item.predict([text])
+            ans = [text, evaluation[en_pred[0]], kakao_ans, evaluation[kr_pred[0]]]
+        else :
+            target = 'kr'
+            result = requests.get(generate_url(text, lang, target),
+                headers={"Authorization": "KakaoAK "+kai_key}).json()
+            tmp_ans = result['translated_text']
+            kakao_ans = '\n'.join([tmp[0] for tmp in tmp_ans])
+            morphs = okt.morphs(kakao_ans, stem=True)
+            X_test = ' '.join([word for word in morphs if not word in stopwords])
+            kr_pred = kr_item.predict([X_test])
+            en_pred = en_item.predict([text])
+            ans = [text, evaluation[kr_pred[0]], kakao_ans, evaluation[en_pred[0]]]
+        return render_template('ai/emotion_res.html', menu=menu, weather=get_weather(), ans=ans)
+
+        
+    
+        
+            
+
+        
+        
+        
+            

@@ -1,37 +1,36 @@
 {% extends "base.html" %}
-{% block additional_head %}
-{% endblock %}
 {% block weather %} {{ weather|safe() }} {% endblock %}
 {% block subtitle %}
-    <strong>피마 인디언 당뇨병 예측</strong>
+    <strong>외국어 언어 감지, 분석 </strong><small>- AI</small>
 {% endblock %}
 {% block content %}
     <div class="row">
-        <div class="col-1"></div>
-        <div class="col-7">
-            <form action="/classification/pima" method="POST">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <form action="/ai/emotion" method="POST" enctype="multipart/form-data">
                 <table class="table table-borderless">
                     <tr>
                         <td>
-                            테스트 셋 번호 (0 ~ 191)
-                        </td> 
-                        <td colspan="2">
-                            <input class="form-control" type="text" placeholder="번호를 입력하세요."  name="index">
+                            <label class="form-check-label">
+                                텍스트
+                            </label>
+                        </td>
+                        <td>
+                            <textarea name="test" id="test" cols="60" rows="5"></textarea>
                         </td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td>
+                        <td colspan="2" style="text-align: center;">
                             <button type="submit" class="btn btn-primary">실행</button>&nbsp;&nbsp;&nbsp;
                             <button type="reset" class="btn btn-secondary">취소</button>
                         </td>
-                        <td></td>
                     </tr>
-                </table>
+                </table>		
             </form>
         </div>
-        <div class="col-4"></div>
-    </div> 
+        <div class="col-2"></div>
+    </div>
 {% endblock %}
 {% block additional_body %}
 {% endblock %}

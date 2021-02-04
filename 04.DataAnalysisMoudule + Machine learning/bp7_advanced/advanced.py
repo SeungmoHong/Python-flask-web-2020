@@ -127,7 +127,7 @@ def nmsc():
         return render_template('advanced/nmsc.html', menu=menu, weather=get_weather())
     else :
         okt = Okt()
-        stopwords = ['의','가','이','은','들','는','좀','잘','걍','과','도','를','으로','자','에','와','한','하다','을']
+        stopwords = ['의','가','이','은','들','는','좀','잘','걍','과','도','를','으로','자','에','와','한','하다','을', '의']
         evaluation = ['부정', '긍정']
         tf_lr = joblib.load('./static/model/tf_lr_nmsc.pkl')
         tf_nb = joblib.load('./static/model/tf_nb_nmsc.pkl')
