@@ -141,7 +141,7 @@ def table():
     result = pd.read_csv('./static/data/cctv.csv',index_col=0)
     result = result.round(2)
     result.reset_index(inplace=True)
-    res = result[['구별','소계','최근증가율','인구수','내국인','외국인','고령자']]
+    res = result[['구별','소계','최근증가율','인구수','cctv비율']]
     cols = list(res.columns)
     val = res.values
     return render_template('seoul/cctv_table.html', menu=menu, weather=get_weather(), res = res,cols = cols, val=val)
