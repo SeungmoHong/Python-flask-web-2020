@@ -13,7 +13,6 @@
 {% endblock %}
 {% block content %}
     <div class="row">
-        <div class="col-2"></div>
         예상 : {{label[1]}} <br>
         정확도 : {{score | round(2)}}%
         <div class="col-10">
@@ -25,8 +24,11 @@
                     </td>
                 </tr>
             </table>
+        </div>    
+        <div class="col-2"></div>
+        <div class="col-9">
             <button class="btn btn-primary float-right"
-                        onclick="location.href='/advanced/image'">돌아가기</button>
+        onclick="location.href='/advanced/image'">돌아가기</button>
         </div>
-    </div>   
+    </div> 
 {% endblock %}

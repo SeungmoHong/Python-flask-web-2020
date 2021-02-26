@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, session, g
 from flask import current_app
 from werkzeug.utils import secure_filename
 from datetime import timedelta
-import os, folium, json, joblib
+import os, folium, json, joblib, base64, urllib3
 import numpy as np
 import pandas as pd
 import sklearn.datasets as sd
@@ -11,7 +11,7 @@ from sklearn.datasets import fetch_20newsgroups
 from my_util.weather import get_weather
 from konlpy.tag import Okt
 import matplotlib.pyplot as plt
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 from tensorflow.keras.models import load_model
 from tensorflow.keras.applications.vgg16 import decode_predictions
 
@@ -183,16 +183,61 @@ def image():
         label = decode_predictions(yhat)
         label = label[0][0]
         score = float(label[2]) * 100
-        plt.figure(figsize=(11,11))
+        plt.figure(figsize=(6,6))
         plt.imshow(img) 
         plt.axis("off")
         plt.savefig('static/img/image1')
         mtime = int(os.stat(imgname).st_mtime)
         return render_template('advanced/image_res.html', menu=menu, weather=get_weather(), label=label, mtime=mtime, score=score)
-    
-            
 
-            
-        
+@ac_bp.route('/object_detection', methods=['GET', 'POST'])
+def object():
+    if request.method == 'GET':
+        return render_template('advanced/object_detection.html', menu=menu, weather=get_weather())
+    else :
+        f = request.files['img']
+        image_file = os.path.join(current_app.root_path, 'static/upload/') + 'sample.jpg'
+        f.save(image_file)
+        current_app.logger.info(f'{image_file} is saved.')  
+        with open('static/keys/etri_ai_key.txt') as kfile:
+            eai_key = kfile.read(100)
+        openApiURL = "http://aiopen.etri.re.kr:8000/ObjectDetect" 
+        _, image_type = os.path.splitext(image_file)
+        image_type = 'jpg' if image_type == '.jfif' else image_type[1:]
+        with open(image_file, 'rb') as file:
+            image_contents = base64.b64encode(file.read()).decode('utf8')
+        request_json = {
+            "request_id": "reserved field",
+            "access_key": eai_key,
+            "argument": {
+                "file": image_contents,
+                "type": image_type
+            }
+        }
+        http = urllib3.PoolManager()
+        response = http.request(
+            "POST",
+            openApiURL,
+            headers={"Content-Type": "application/json; charset=UTF-8"},
+            body=json.dumps(request_json)
+        )    
+        result = json.loads(response.data)
+        obj_list = result['return_object']['data']
+        image = Image.open(image_file)
+        plt.imshow(image);
+        draw = ImageDraw.Draw(image)
+        for obj in obj_list:
+            name = obj['class']
+            x = int(obj['x'])
+            y = int(obj['y'])
+            w = int(obj['width'])
+            h = int(obj['height'])
+            draw.text((x+10,y+10), name, font=ImageFont.truetype('malgun.ttf', 20), fill=(255,0,0))
+            draw.rectangle(((x, y), (x+w, y+h)), outline=(255,0,0), width=2)
+        plt.imshow(image);
+        image.save('static/img/object.'+image_type)
+        mtime = int(os.stat(image_file).st_mtime)
+
+        return render_template('advanced/object_detection_res.html', menu=menu, weather=get_weather(), mtime=mtime)
 
         
