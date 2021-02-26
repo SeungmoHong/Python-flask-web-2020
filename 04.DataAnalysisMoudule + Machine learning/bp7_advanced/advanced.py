@@ -10,7 +10,10 @@ import matplotlib.pyplot as plt
 from sklearn.datasets import fetch_20newsgroups
 from my_util.weather import get_weather
 from konlpy.tag import Okt
-
+import matplotlib.pyplot as plt
+from PIL import Image
+from tensorflow.keras.models import load_model
+from tensorflow.keras.applications.vgg16 import decode_predictions
 
 
 
@@ -165,6 +168,27 @@ def nmsc():
                     'CountVectorizer + 나이브 베이즈' : evaluation[co_nb_pred[0]]}
             item = ['사용자 테스트' , text]
         return render_template('advanced/nmsc_res.html', menu=menu, weather=get_weather(), ans=ans, item=item)
+@ac_bp.route('/image', methods=['GET', 'POST'])
+def image():
+    if request.method == 'GET':
+        return render_template('advanced/image.html', menu=menu, weather=get_weather())
+    else :        
+        f = request.files['img']
+        imgname = os.path.join(current_app.root_path, 'static/upload/') + f.filename
+        f.save(imgname)
+        current_app.logger.info(f'{imgname} is saved.')
+        vgg = load_model('./static/model/vgg.pkl')
+        img = np.array(Image.open(imgname).resize((224, 224)))
+        yhat = vgg.predict(img.reshape(-1, 224, 224, 3))
+        label = decode_predictions(yhat)
+        label = label[0][0]
+        score = float(label[2]) * 100
+        plt.figure(figsize=(11,11))
+        plt.imshow(img) 
+        plt.axis("off")
+        plt.savefig('static/img/image1')
+        mtime = int(os.stat(imgname).st_mtime)
+        return render_template('advanced/image_res.html', menu=menu, weather=get_weather(), label=label, mtime=mtime, score=score)
     
             
 

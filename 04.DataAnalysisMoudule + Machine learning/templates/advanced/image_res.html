@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block additional_head %}
+    <style>
+        /* Make the image fully responsive */
+        td img {
+            width: 100%;
+        }
+    </style>
+{% endblock %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+    <strong>이미지 분류 결과</strong>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-2"></div>
+        예상 : {{label[1]}} <br>
+        정확도 : {{score | round(2)}}%
+        <div class="col-10">
+            <table>
+                <tr>
+                    <td>
+                        <img src="{{url_for('static', filename='img/image1.png', q=mtime)}}"
+                                height="600" alt="테스트 이미지">
+                    </td>
+                </tr>
+            </table>
+            <button class="btn btn-primary float-right"
+                        onclick="location.href='/advanced/image'">돌아가기</button>
+        </div>
+    </div>   
+{% endblock %}
