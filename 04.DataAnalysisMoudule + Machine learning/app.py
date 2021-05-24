@@ -30,6 +30,7 @@ app = Flask(__name__)
 app.secret_key = 'qwert12345'
 app.config['SESSION_COOKIE_PATH'] = '/'
 
+# 블루 프린트 메뉴 순서대로
 app.register_blueprint(seoul_bp, url_prefix='/seoul')
 app.register_blueprint(covid_bp, url_prefix='/covid-19')
 app.register_blueprint(carto_bp, url_prefix='/cartogram')
