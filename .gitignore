@@ -5,7 +5,6 @@ googlemapskey.txt
 kakaomapkey.txt
 openweatherapikey.txt
 roadapikey.txt
-커피지수나타내기2.ipynb
 커피업소정보.csv
 station_data/
 과제data/
@@ -17,13 +16,14 @@ voice/
 fontawesome-free-5.15.1-web/
 UCI HAR Dataset/
 test.ipynb
+samples/
+roadapikey.txt
 # gitignore template for Jupyter Notebooks
 # website: http://jupyter.org/
 __pycache__/
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
-samples/
-roadapikey.txt
+
 
 
 # IPython
