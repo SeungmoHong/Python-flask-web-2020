@@ -26,6 +26,10 @@ def get_weather_main():
     return weather
 menu = {'ho':0, 'da':1, 'ml':0, 'se':0, 'co':1, 'cg':0, 'cr':0, 'wc':0,
             'cf':0, 'ac':0, 'rg':0, 'cl':0}
+today = datetime.today().strftime("%Y-%m-%d")
+year = today.split('-')[0]
+mon = today.split('-')[1]
+t = int(year)-2020            
 @covid_bp.route('/bigcity', methods=['GET', 'POST'])
 def bigcity():
     if request.method == 'GET': 
@@ -160,10 +164,22 @@ def seoul_gu(gu):
 
 @covid_bp.route('/bigcity_chart' , methods=['GET', 'POST'])
 def bigcity_chart():
-    if request.method == 'GET': 
+    if request.method == 'GET':
+        months = []
+        for i in range(t):
+            for k in range(12):
+                a = i+2021
+                b = k+1 
+                if a == int(year) and b > int(mon):
+                    break
+                if b < 10:
+                    b = f'0{b}'
+                plus_time = f'{a}년 {b}월'
+                months.append(plus_time)
         area = ['합계', '서울', '부산', '대구', '인천', '광주', '대전', '울산', '세종', '경기', '강원',
        '충북', '충남', '전북', '전남', '경북', '경남', '제주', '검역']
-        month = ['2020년 03월','2020년 04월','2020년 05월','2020년 06월','2020년 07월','2020년 08월','2020년 09월','2020년 10월','2020년 11월','2020년 12월','2021년 01월']
+        month = ['2020년 03월','2020년 04월','2020년 05월','2020년 06월','2020년 07월','2020년 08월','2020년 09월','2020년 10월','2020년 11월','2020년 12월']
+        month = month + months
         
         return render_template('covid-19/makechart.html', menu=menu, weather=get_weather(), area = area , month = month)
         
@@ -215,10 +231,22 @@ def bigcity_chart():
 @covid_bp.route('/seoul_chart' , methods=['GET', 'POST'])
 def seoul_chart():
     if request.method == 'GET': 
+        months = []
+        for i in range(t):
+            for k in range(12):
+                a = i+2021
+                b = k+1 
+                if a == int(year) and b > int(mon):
+                    break
+                if b < 10:
+                    b = f'0{b}'
+                plus_time = f'{a}년 {b}월'
+                months.append(plus_time)
         area = ['강서구', '마포구', '중랑구', '종로구', '성북구', '송파구', '서대문구', '성동구',
        '강남구', '서초구', '구로구', '강동구', '관악구', '은평구', '노원구', '동작구', '금천구',
        '양천구', '영등포구', '광진구', '동대문구', '도봉구', '용산구', '강북구', '중구', '기타']
-        month = ['2020년 03월','2020년 04월','2020년 05월','2020년 06월','2020년 07월','2020년 08월','2020년 09월','2020년 10월','2020년 11월','2020년 12월','2021년 01월']
+        month = ['2020년 03월','2020년 04월','2020년 05월','2020년 06월','2020년 07월','2020년 08월','2020년 09월','2020년 10월','2020년 11월','2020년 12월']
+        month = month + months
         return render_template('covid-19/makechart_seoul.html', menu=menu, weather=get_weather(), area = area, month = month)
     
     else:
