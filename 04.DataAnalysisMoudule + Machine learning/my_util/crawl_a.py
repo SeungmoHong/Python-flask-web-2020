@@ -3,10 +3,10 @@ import urllib.parse
 import requests
 import pandas as pd
 
+headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36'}
 
 def bugs_crawl():
     url = 'https://music.bugs.co.kr/chart'
-    headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36'}
     html = requests.get(url, headers = headers).text
     soup = BeautifulSoup(html, 'html.parser')
     img_list,rank_list, title_list, singer_list, album_list =[],[],[],[],[]
@@ -36,7 +36,6 @@ def bugs_crawl():
 
 def mango_crawl():
     url = 'https://www.mangoplate.com/search/%EA%B3%A0%EA%B8%B0'
-    headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36'}
     html = requests.get(url, headers = headers).text
     soup = BeautifulSoup(html, 'html.parser')
     
@@ -100,18 +99,6 @@ def mango_search(search):
             info_list.append(info)
             addr_list.append(addr)
             link_list.append('https://www.mangoplate.com/' + link)
-            title = soup.select('li.list-restaurant')[i].find_all('h2')[1].get_text().strip('\n').split('\n')[0]
-            img = soup.select('li.list-restaurant')[i].find_all('img')[1].attrs['data-original'].replace('359:240','120:80')
-            point = soup.select('li.list-restaurant')[i].find_all('strong')[1].text
-            info = soup.select('li.list-restaurant')[i].find_all('p')[2].text
-            addr = soup.select('li.list-restaurant')[i].find_all('img')[1].attrs['alt'].split(' - ')[1]
-            link = soup.select('li.list-restaurant')[i].find_all('a')[3].attrs['href']
-            title_list.append(title)
-            img_list.append(img)
-            point_list.append(point)
-            info_list.append(info)
-            addr_list.append(addr)
-            link_list.append('https://www.mangoplate.com/' + link)
         except:
             pass
     
@@ -132,4 +119,11 @@ def tv_crawl(option):
     html = req.content.decode('utf-8','replace') 
     soup = BeautifulSoup(html, 'html.parser')
     
+    return soup
+
+def lolchess_crawl():
+    url = 'https://lolchess.gg/meta?hl=ko-KR'
+    html = requests.get(url, headers = headers).text
+    soup = BeautifulSoup(html, 'html.parser')
+
     return soup

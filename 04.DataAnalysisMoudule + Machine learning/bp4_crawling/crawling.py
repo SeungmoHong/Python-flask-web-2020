@@ -52,3 +52,13 @@ def tv_option(option):
     title = soup.select_one('span.subbody_tit_kor').text
     
     return render_template('crawling/tv.html', menu=menu, weather=get_weather(), fam=fam, view=view , title = title)
+
+@crawling_bp.route('/lolchess')
+def lolchess():
+    soup = lolchess_crawl()
+    # contents = soup.select_one('.guide-meta__group.tier-S')
+    contents = soup.select_one('.container-full')
+
+    return render_template('crawling/lolchess.html', menu=menu, weather=get_weather(), contents=contents)
+
+
