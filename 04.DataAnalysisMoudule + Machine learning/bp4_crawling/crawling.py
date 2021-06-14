@@ -57,7 +57,7 @@ def tv_option(option):
 def lolchess():
     soup = lolchess_crawl()
     # contents = soup.select_one('.guide-meta__group.tier-S')
-    contents = soup.select_one('.container-full')
+    contents = str(soup.select_one('.guide-meta.mt-4')).replace('<br>','')
 
     return render_template('crawling/lolchess.html', menu=menu, weather=get_weather(), contents=contents)
 
